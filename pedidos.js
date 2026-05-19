@@ -1,4 +1,4 @@
-import { db, app } from "./firebase.js";
+import { db, app } from "firebase.js";
 
 import {
 
@@ -28,7 +28,7 @@ onAuthStateChanged(auth, async (user) => {
   // NÃO LOGADO
   if (!user) {
 
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 
     return;
   }
