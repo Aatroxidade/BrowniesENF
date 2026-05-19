@@ -1,4 +1,4 @@
-import { db, app } from "./firebase.js";
+import { db, app } from "firebase.js";
 
 import {
 
@@ -33,7 +33,7 @@ onAuthStateChanged(auth, (user) => {
   confirmButtonColor: "#d48a27"
 });
 
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 
     return;
   }
