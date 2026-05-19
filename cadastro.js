@@ -1,4 +1,4 @@
-import { app } from "./firebase.js";
+import { app } from "firebase.js";
 
 import {
   getAuth,
@@ -21,7 +21,7 @@ document.getElementById("btnCadastrar").addEventListener("click", async () => {
 
     erro.innerText = "Conta criada com sucesso!";
 
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 
   } catch (e) {
     if (e.code === "auth/email-already-in-use") {
@@ -42,7 +42,7 @@ document.getElementById("btnCadastrar").addEventListener("click", async () => {
 // 🔥 VOLTAR LOGIN
 document.getElementById("btnEntrar").addEventListener("click", () => {
 
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 
 });
 
