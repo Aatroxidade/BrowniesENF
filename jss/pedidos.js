@@ -20,7 +20,7 @@ const auth = getAuth(app);
 
 
 // ======================================================
-// VERIFICAR LOGIN
+// LOGIN
 // ======================================================
 
 onAuthStateChanged(auth, async (user) => {
@@ -34,14 +34,20 @@ onAuthStateChanged(auth, async (user) => {
 
   document.body.style.display = "block";
 
-  carregarUsuario(user);
+  await carregarUsuario(user);
 
   carregarPedidos(user);
 
+  // ======================================================
   // SAIR
-  document
-    .getElementById("btnSair")
-    .addEventListener("click", async (e) => {
+  // ======================================================
+
+  const btnSair =
+    document.getElementById("btnSair");
+
+  if (btnSair) {
+
+    btnSair.addEventListener("click", async (e) => {
 
       e.preventDefault();
 
@@ -51,11 +57,13 @@ onAuthStateChanged(auth, async (user) => {
 
     });
 
+  }
+
 });
 
 
 // ======================================================
-// CARREGAR USUÁRIO
+// USUÁRIO
 // ======================================================
 
 async function carregarUsuario(user) {
@@ -78,7 +86,7 @@ async function carregarUsuario(user) {
 
 
 // ======================================================
-// CARREGAR PEDIDOS
+// PEDIDOS
 // ======================================================
 
 function carregarPedidos(user) {
@@ -94,12 +102,12 @@ function carregarPedidos(user) {
 
   );
 
-  onSnapshot(q, (querySnapshot) => {
+  onSnapshot(q, (snapshot) => {
 
     lista.innerHTML = "";
 
     // SEM PEDIDOS
-    if (querySnapshot.empty) {
+    if (snapshot.empty) {
 
       lista.innerHTML = `
 
@@ -114,7 +122,7 @@ function carregarPedidos(user) {
     }
 
     // LISTAR
-    querySnapshot.forEach((pedidoDoc) => {
+    snapshot.forEach((pedidoDoc) => {
 
       const pedido =
         pedidoDoc.data();
@@ -135,7 +143,7 @@ function carregarPedidos(user) {
 
 
 // ======================================================
-// CARD PEDIDO
+// CARD
 // ======================================================
 
 function criarCardPedido(pedido, pedidoId) {
@@ -208,7 +216,7 @@ function criarCardPedido(pedido, pedidoId) {
 
 
 // ======================================================
-// CANCELAR PEDIDO
+// CANCELAR
 // ======================================================
 
 window.cancelarPedido = async (pedidoId) => {
@@ -241,13 +249,11 @@ window.cancelarPedido = async (pedidoId) => {
       doc(db, "pedidos", pedidoId)
     );
 
-    await Swal.fire({
+    Swal.fire({
 
       icon: "success",
 
       title: "Pedido cancelado!",
-
-      text: "Seu pedido foi removido.",
 
       confirmButtonColor: "#d48a27"
 
@@ -265,7 +271,7 @@ window.cancelarPedido = async (pedidoId) => {
 
       title: "Erro",
 
-      text: "Não foi possível cancelar o pedido.",
+      text: "Não foi possível cancelar.",
 
       confirmButtonColor: "#d33"
 
@@ -277,7 +283,7 @@ window.cancelarPedido = async (pedidoId) => {
 
 
 // ======================================================
-// EDITAR PEDIDO
+// EDITAR
 // ======================================================
 
 window.editarPedido = (pedidoId) => {
