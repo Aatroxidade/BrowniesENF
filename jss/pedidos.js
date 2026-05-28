@@ -5,7 +5,6 @@ import {
   query,
   where,
   onSnapshot,
-  getDocs,
   deleteDoc,
   doc,
   getDoc
@@ -36,11 +35,15 @@ onAuthStateChanged(auth, async (user) => {
   document.body.style.display = "block";
 
   carregarUsuario(user);
+
   carregarPedidos(user);
 
-  // BOTÃO SAIR
-  document.getElementById("btnSair")
-    .addEventListener("click", async () => {
+  // SAIR
+  document
+    .getElementById("btnSair")
+    .addEventListener("click", async (e) => {
+
+      e.preventDefault();
 
       await signOut(auth);
 
@@ -57,13 +60,16 @@ onAuthStateChanged(auth, async (user) => {
 
 async function carregarUsuario(user) {
 
-  const docRef = doc(db, "usuarios", user.uid);
+  const docRef =
+    doc(db, "usuarios", user.uid);
 
-  const docSnap = await getDoc(docRef);
+  const docSnap =
+    await getDoc(docRef);
 
   if (!docSnap.exists()) return;
 
-  const dados = docSnap.data();
+  const dados =
+    docSnap.data();
 
   document.getElementById("nomeUsuario").innerText =
     `Olá, ${dados.nome}`;
@@ -75,7 +81,7 @@ async function carregarUsuario(user) {
 // CARREGAR PEDIDOS
 // ======================================================
 
-async function carregarPedidos(user) {
+function carregarPedidos(user) {
 
   const lista =
     document.getElementById("listaPedidos");
@@ -88,20 +94,17 @@ async function carregarPedidos(user) {
 
   );
 
- onSnapshot(
-
-  collection(db, "pedidos"),
-
-  (querySnapshot) => {
+  onSnapshot(q, (querySnapshot) => {
 
     lista.innerHTML = "";
 
+    // SEM PEDIDOS
     if (querySnapshot.empty) {
 
       lista.innerHTML = `
 
         <p class="text-white text-center">
-          Nenhum pedido encontrado.
+          Você ainda não fez pedidos.
         </p>
 
       `;
@@ -110,46 +113,21 @@ async function carregarPedidos(user) {
 
     }
 
+    // LISTAR
     querySnapshot.forEach((pedidoDoc) => {
 
-      const pedido = pedidoDoc.data();
+      const pedido =
+        pedidoDoc.data();
 
       lista.innerHTML += criarCardPedido(
+
         pedido,
+
         pedidoDoc.id
+
       );
 
     });
-
-  }
-
-);
-  // SEM PEDIDOS
-  if (querySnapshot.empty) {
-
-    lista.innerHTML = `
-
-      <p class="text-white text-center">
-        Você ainda não fez pedidos.
-      </p>
-
-    `;
-
-    return;
-
-  }
-
-  lista.innerHTML = "";
-
-  // LISTAR PEDIDOS
-  querySnapshot.forEach((pedidoDoc) => {
-
-    const pedido = pedidoDoc.data();
-
-    lista.innerHTML += criarCardPedido(
-      pedido,
-      pedidoDoc.id
-    );
 
   });
 
@@ -274,8 +252,6 @@ window.cancelarPedido = async (pedidoId) => {
       confirmButtonColor: "#d48a27"
 
     });
-
-    location.reload();
 
   }
 
