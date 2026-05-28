@@ -104,8 +104,15 @@ onAuthStateChanged(auth, async (user) => {
 
     const dados = docSnap.data();
 
-    document.getElementById("nomeUsuario").innerText =
-      `Olá, ${dados.nome}`;
+    const nomeUsuario =
+      document.getElementById("nomeUsuario");
+
+    if (nomeUsuario) {
+
+      nomeUsuario.innerText =
+        `Olá, ${dados.nome}`;
+
+    }
 
   }
 
@@ -124,15 +131,20 @@ onAuthStateChanged(auth, async (user) => {
 
     if (pedidoSnap.exists()) {
 
-      const pedido = pedidoSnap.data();
+      const pedido =
+        pedidoSnap.data();
 
-      nomeInput.value = pedido.nome;
+      nomeInput.value =
+        pedido.nome;
 
-      quantidadeInput.value = pedido.quantidade;
+      quantidadeInput.value =
+        pedido.quantidade;
 
-      dataInput.value = pedido.data;
+      dataInput.value =
+        pedido.data;
 
-      horarioInput.value = pedido.horario;
+      horarioInput.value =
+        pedido.horario;
 
       observacaoInput.value =
         pedido.observacao || "";
@@ -166,7 +178,10 @@ onAuthStateChanged(auth, async (user) => {
       observacaoInput.value;
 
 
+    // ======================================================
     // CAMPOS
+    // ======================================================
+
     if (!nome || !quantidade || !data || !horario) {
 
       Swal.fire({
@@ -186,7 +201,10 @@ onAuthStateChanged(auth, async (user) => {
     }
 
 
+    // ======================================================
     // VALIDAR NOME
+    // ======================================================
+
     const regexNome =
       /^[A-Za-zÀ-ÿ\s]+$/;
 
@@ -209,7 +227,10 @@ onAuthStateChanged(auth, async (user) => {
     }
 
 
+    // ======================================================
     // LIMITE
+    // ======================================================
+
     if (quantidade > 12) {
 
       quantidadeInput.value = 12;
@@ -231,7 +252,10 @@ onAuthStateChanged(auth, async (user) => {
     }
 
 
+    // ======================================================
     // LOADING
+    // ======================================================
+
     btnAgendamento.disabled = true;
 
     btnAgendamento.innerHTML = `
@@ -312,34 +336,72 @@ onAuthStateChanged(auth, async (user) => {
 
         );
 
+        console.log("STATUS:", resposta.status);
+
+        if (!resposta.ok) {
+
+          throw new Error(
+            "Erro no backend"
+          );
+
+        }
+
         const dados =
           await resposta.json();
 
         console.log(dados);
 
 
+        // ======================================================
         // QR CODE
-        document.getElementById("qrCodePix").src =
-          `data:image/png;base64,${dados.qrCodeBase64}`;
+        // ======================================================
+
+        const qrCodePix =
+          document.getElementById("qrCodePix");
+
+        if (qrCodePix) {
+
+          qrCodePix.src =
+            `data:image/png;base64,${dados.qrCodeBase64}`;
+
+        }
 
 
+        // ======================================================
         // PIX COPIA E COLA
-        document.getElementById("chavePix").value =
-          dados.qrCode;
+        // ======================================================
+
+        const chavePix =
+          document.getElementById("chavePix");
+
+        if (chavePix) {
+
+          chavePix.value =
+            dados.qrCode;
+
+        }
+
+
+        // ======================================================
+        // ABRIR MODAL
+        // ======================================================
+
+        const modalPix =
+          document.getElementById("modalPix");
+
+        if (modalPix) {
+
+          modalPix.classList.remove("d-none");
+
+        }
 
       }
 
 
       // ======================================================
-      // ABRIR MODAL
+      // RESET BOTÃO
       // ======================================================
 
-      document
-        .getElementById("modalPix")
-        .classList.remove("d-none");
-
-
-      // RESET BOTÃO
       btnAgendamento.disabled = false;
 
       btnAgendamento.innerHTML =
@@ -347,28 +409,31 @@ onAuthStateChanged(auth, async (user) => {
 
     }
 
-catch (e) {
+    catch (e) {
 
-  console.error("ERRO COMPLETO:", e);
+      console.error(
+        "ERRO COMPLETO:",
+        e
+      );
 
-  btnAgendamento.disabled = false;
+      btnAgendamento.disabled = false;
 
-  btnAgendamento.innerHTML =
-    "Confirmar Agendamento";
+      btnAgendamento.innerHTML =
+        "Confirmar Agendamento";
 
-  Swal.fire({
+      Swal.fire({
 
-    icon: "error",
+        icon: "error",
 
-    title: "Erro",
+        title: "Erro",
 
-    text: "Não foi possível salvar.",
+        text: "Não foi possível gerar o PIX.",
 
-    confirmButtonColor: "#d33"
+        confirmButtonColor: "#d33"
 
-  });
+      });
 
-}
+    }
 
   });
 
@@ -377,9 +442,12 @@ catch (e) {
   // SAIR
   // ======================================================
 
-  document
-    .getElementById("btnSair")
-    .addEventListener("click", async () => {
+  const btnSair =
+    document.getElementById("btnSair");
+
+  if (btnSair) {
+
+    btnSair.addEventListener("click", async () => {
 
       await signOut(auth);
 
@@ -388,6 +456,8 @@ catch (e) {
 
     });
 
+  }
+
 });
 
 
@@ -395,118 +465,132 @@ catch (e) {
 // FORMATAR HORÁRIO
 // ======================================================
 
-horarioInput.addEventListener("input", () => {
+if (horarioInput) {
 
-  let valor =
-    horarioInput.value.replace(/\D/g, "");
+  horarioInput.addEventListener("input", () => {
 
-  if (valor.length >= 3) {
+    let valor =
+      horarioInput.value.replace(/\D/g, "");
 
-    valor =
+    if (valor.length >= 3) {
 
-      valor.slice(0, 2) +
+      valor =
 
-      ":" +
+        valor.slice(0, 2) +
 
-      valor.slice(2, 4);
+        ":" +
 
-  }
+        valor.slice(2, 4);
 
-  horarioInput.value = valor;
+    }
 
-});
+    horarioInput.value = valor;
+
+  });
+
+}
 
 
 // ======================================================
 // FORMATAR DATA
 // ======================================================
 
-dataInput.addEventListener("input", () => {
+if (dataInput) {
 
-  let valor =
-    dataInput.value.replace(/\D/g, "");
+  dataInput.addEventListener("input", () => {
 
-  if (valor.length >= 2) {
+    let valor =
+      dataInput.value.replace(/\D/g, "");
 
-    let dia =
-      parseInt(valor.slice(0, 2));
+    if (valor.length >= 2) {
 
-    if (dia > 31) dia = 31;
+      let dia =
+        parseInt(valor.slice(0, 2));
 
-    valor =
-      dia.toString().padStart(2, "0") +
-      valor.slice(2);
+      if (dia > 31) dia = 31;
 
-  }
+      valor =
 
-  if (valor.length >= 4) {
+        dia.toString().padStart(2, "0") +
 
-    let mes =
-      parseInt(valor.slice(2, 4));
+        valor.slice(2);
 
-    if (mes > 12) mes = 12;
+    }
 
-    valor =
+    if (valor.length >= 4) {
 
-      valor.slice(0, 2) +
+      let mes =
+        parseInt(valor.slice(2, 4));
 
-      mes.toString().padStart(2, "0") +
+      if (mes > 12) mes = 12;
 
-      valor.slice(4);
+      valor =
 
-  }
+        valor.slice(0, 2) +
 
-  if (valor.length > 2) {
+        mes.toString().padStart(2, "0") +
 
-    valor =
+        valor.slice(4);
 
-      valor.slice(0, 2) +
+    }
 
-      "/" +
+    if (valor.length > 2) {
 
-      valor.slice(2);
+      valor =
 
-  }
+        valor.slice(0, 2) +
 
-  if (valor.length > 5) {
+        "/" +
 
-    valor =
+        valor.slice(2);
 
-      valor.slice(0, 5) +
+    }
 
-      "/" +
+    if (valor.length > 5) {
 
-      valor.slice(5, 9);
+      valor =
 
-  }
+        valor.slice(0, 5) +
 
-  dataInput.value = valor;
+        "/" +
 
-});
+        valor.slice(5, 9);
+
+    }
+
+    dataInput.value = valor;
+
+  });
+
+}
 
 
 // ======================================================
 // QUANTIDADE
 // ======================================================
 
-quantidadeInput.addEventListener("input", () => {
+if (quantidadeInput) {
 
-  quantidadeInput.value =
+  quantidadeInput.addEventListener("input", () => {
 
-    quantidadeInput.value.replace(/\D/g, "");
+    quantidadeInput.value =
 
-  let quantidade =
-    Number(quantidadeInput.value);
+      quantidadeInput.value.replace(/\D/g, "");
 
-  if (quantidade > 12) {
+    let quantidade =
+      Number(quantidadeInput.value);
 
-    quantidadeInput.value = 12;
+    if (quantidade > 12) {
 
-  }
+      quantidadeInput.value = 12;
 
-  atualizarPreco();
+    }
 
-});
+    atualizarPreco();
+
+  });
+
+}
 
 
 // ======================================================
@@ -514,6 +598,8 @@ quantidadeInput.addEventListener("input", () => {
 // ======================================================
 
 function atualizarPreco() {
+
+  if (!precoTotal) return;
 
   let quantidade =
     Number(quantidadeInput.value);
@@ -545,9 +631,12 @@ atualizarPreco();
 // COPIAR PIX
 // ======================================================
 
-document
-  .getElementById("copiarPix")
-  .addEventListener("click", () => {
+const copiarPixBtn =
+  document.getElementById("copiarPix");
+
+if (copiarPixBtn) {
+
+  copiarPixBtn.addEventListener("click", () => {
 
     const chave =
       document.getElementById("chavePix");
@@ -574,18 +663,28 @@ document
 
   });
 
+}
+
 
 // ======================================================
 // PAGAMENTO
 // ======================================================
 
-document
-  .getElementById("btnPago")
-  .addEventListener("click", () => {
+const btnPago =
+  document.getElementById("btnPago");
 
-    document
-      .getElementById("modalPix")
-      .classList.add("d-none");
+if (btnPago) {
+
+  btnPago.addEventListener("click", () => {
+
+    const modalPix =
+      document.getElementById("modalPix");
+
+    if (modalPix) {
+
+      modalPix.classList.add("d-none");
+
+    }
 
     Swal.fire({
 
@@ -608,17 +707,29 @@ document
 
   });
 
+}
+
 
 // ======================================================
 // FECHAR PIX
 // ======================================================
 
-document
-  .getElementById("fecharPix")
-  .addEventListener("click", () => {
+const fecharPix =
+  document.getElementById("fecharPix");
 
-    document
-      .getElementById("modalPix")
-      .classList.add("d-none");
+if (fecharPix) {
+
+  fecharPix.addEventListener("click", () => {
+
+    const modalPix =
+      document.getElementById("modalPix");
+
+    if (modalPix) {
+
+      modalPix.classList.add("d-none");
+
+    }
 
   });
+
+}
