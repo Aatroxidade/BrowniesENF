@@ -26,7 +26,7 @@ onAuthStateChanged(auth, async (user) => {
 
   if (!user) {
 
-    window.location.href = "login.html";
+    window.location.href = "index.html";
     return;
 
   }
@@ -324,6 +324,6 @@ document.getElementById("btnSair")
 
     await signOut(auth);
 
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 
   });

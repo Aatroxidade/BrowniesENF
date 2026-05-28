@@ -126,7 +126,7 @@ email: email
 // VOLTAR LOGIN
 document.getElementById("btnEntrar").addEventListener("click", () => {
 
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 
 });
 

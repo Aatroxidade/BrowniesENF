@@ -33,7 +33,7 @@ onAuthStateChanged(auth, async (user) => {
   // NÃO LOGADO
   if (!user) {
 
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 
     return;
   }
@@ -69,7 +69,7 @@ if (docSnap.exists()) {
 
   await signOut(auth);
 
-  window.location.href = "login.html";
+  window.location.href = "index.html";
 
 });
 
