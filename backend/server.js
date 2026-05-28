@@ -70,6 +70,9 @@ app.post("/pedido", async (req, res) => {
 
         payment_method_id: "pix",
 
+           notification_url:
+      "https://browniesenf.onrender.com/webhook",
+
         payer: {
 
           email: dados.usuario
