@@ -278,7 +278,7 @@ onAuthStateChanged(auth, async (user) => {
 
         const resposta = await fetch(
 
-          "https://browniesenf.onrender.com",
+          "https://browniesenf.onrender.com/pedido",
 
           {
 
