@@ -7,13 +7,12 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Painel Admin</title>
+  <title>Meus Pedidos | Brownies ENF</title>
 
   <!-- CSS -->
-  <link rel="stylesheet" href="../css/global.css">
-  <link rel="stylesheet" href="../css/navbar.css">
-  <link rel="stylesheet" href="../css/inicial.css">
-  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="css/pedidos.css">
+   <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/global.css">
 
   <!-- BOOTSTRAP -->
   <link
@@ -21,7 +20,7 @@
     rel="stylesheet"
   >
 
-  <!-- FONTS -->
+  <!-- GOOGLE FONTS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
 
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,7 +31,7 @@
   >
 
   <!-- ÍCONE -->
-  <link rel="icon" type="image/png" href="../imgs/logo.png">
+  <link rel="icon" type="image/png" href="imgs/logo.png">
 
 </head>
 
@@ -43,16 +42,18 @@
 
     <div class="container-fluid">
 
+      <!-- LOGO -->
       <a class="navbar-brand" href="inicial.html">
 
         <img
-          src="../imgs/logo.png"
-          alt="Logo"
+          src="imgs/logo.png"
+          alt="Logo Brownies ENF"
           class="logo-navbar"
         >
 
       </a>
 
+      <!-- MENU MOBILE -->
       <button
         class="navbar-toggler"
         type="button"
@@ -62,23 +63,43 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
+      <!-- ITENS -->
       <div class="collapse navbar-collapse" id="menu">
+
+    <li class="nav-item">
+
+      <span
+      id="nomeUsuario"
+      class="text-white me-3 fw-bold"
+      >
+      </span>
+
+     </li>
 
         <ul class="navbar-nav ms-auto align-items-center">
 
+          <!-- INÍCIO -->
           <li class="nav-item">
-            <a class="nav-link active" href="inicial.html">
+
+            <a
+              class="nav-link active"
+              href="inicial.html"
+            >
               Página Inicial
             </a>
+
           </li>
 
+          <!-- SAIR -->
           <li class="nav-item">
-            <a
+
+            <a 
               class="btn btn-danger ms-lg-3 mt-2 mt-lg-0"
               href="index.html"
             >
               Sair
             </a>
+
           </li>
 
         </ul>
@@ -93,30 +114,27 @@
   <div class="container mt-5">
 
     <h1 class="titulo text-center">
-      Painel Administrativo
+      Meus Pedidos
     </h1>
 
     <p class="sejabemvindo text-center">
-      Gerencie os pedidos dos clientes
+      Acompanhe seus pedidos em tempo real
     </p>
 
-  </div>
-
-  <!-- PEDIDOS -->
-  <div class="container mt-5">
-
-    <div id="listaAdmin" class="lista_admin"></div>
+    <!-- LISTA -->
+    <div
+      id="listaPedidos"
+      class="mt-5"
+    ></div>
 
   </div>
 
   <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
-  </script>
-
-  <script type="module" src="../jss/admin.js"></script>
+  <script type="module" src="jss/pedidos.js"></script>
 
 </body>
 
