@@ -1,0 +1,31 @@
+.lista_admin{
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 30px;
+}
+
+.card_admin{
+    width: 380px;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background-color: rgba(255,255,255,0.08);
+
+    color: white;
+
+    backdrop-filter: blur(6px);
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    transition: 0.3s;
+}
+
+.card_admin:hover{
+    transform: translateY(-5px);
+}

@@ -1,0 +1,139 @@
+/* BACKGROUND */
+
+.imginicial{
+    min-height: 100vh;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)),
+        url("https://images.unsplash.com/photo-1606313564200-e75d5e30476c");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+}
+
+/* TÍTULOS */
+
+.titulo{
+    text-align: center;
+
+    margin-top: 30px;
+
+    font-size: 3rem;
+
+    font-weight: bold;
+
+    color: #ffffff;
+
+    text-shadow:
+        0 0 5px #000000,
+        0 0 10px #000000,
+        0 0 20px #000000;
+}
+
+.sejabemvindo{
+    width: 100%;
+
+    text-align: center;
+
+    color: #ececec;
+
+    opacity: 0.8;
+}
+
+/* CARDS */
+
+.cards_brownies{
+    display: flex;
+
+    justify-content: center;
+
+    gap: 50px;
+
+    flex-wrap: wrap;
+
+    margin-top: 40px;
+}
+
+.card_brownie{
+    width: 350px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background-color: rgba(255,255,255,0.08);
+
+    text-align: center;
+
+    backdrop-filter: blur(5px);
+}
+
+.brownies{
+    width: 100%;
+
+    border-radius: 20px;
+
+    transition: 0.3s;
+}
+
+.brownies:hover{
+    transform: scale(1.02);
+}
+
+.texto_ilustrativo{
+    opacity: 0.7;
+
+    color: white;
+
+    font-size: 10px;
+}
+
+.em_breve_button{
+    margin-top: 57px;
+}
+
+/* PREÇO BROWNIE */
+
+.preco_brownie{
+
+    margin-top: 10px;
+
+    margin-bottom: 10px;
+
+    padding: 6px;
+
+    border-radius: 16px;
+
+    background: rgba(255,255,255,0.06);
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+}
+
+.texto_preco{
+
+    color: rgba(255,255,255,0.55);
+
+    font-size: 13px;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+}
+
+.preco_brownie h2{
+
+    margin: 10;
+
+    color: #ffcc70;
+
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    text-shadow:
+      0 0 12px rgba(255,204,112,0.25);
+}

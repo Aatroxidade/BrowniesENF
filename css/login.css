@@ -1,0 +1,211 @@
+/* LOGIN */
+
+.body-login{
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+}
+
+/* FUNDO LOGIN */
+
+.imglogin{
+    background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.82)),
+        url("https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=1600&auto=format&fit=crop");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* CARD LOGIN */
+
+.bordalogin{
+    width: 70%;
+    max-width: 480px;
+
+    padding: 50px;
+
+    border-radius: 28px;
+
+    background: rgba(255,255,255,0.08);
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.35);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+/* TÍTULOS */
+
+.titulo-marca{
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    color: white;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 5px;
+
+    text-shadow:
+        0 0 10px rgba(0,0,0,0.6);
+}
+
+.textlogin{
+    color: white;
+
+    font-size: 1.8rem;
+
+    font-weight: 600;
+
+    margin-bottom: 25px;
+}
+
+/* INPUTS */
+
+.caixaEmail,
+.caixaSenha{
+    width: 100%;
+
+    height: 52px;
+
+    margin-bottom: 18px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    background: rgba(255,255,255,0.08);
+
+    color: white;
+
+    padding-left: 16px;
+
+    outline: none;
+
+    transition: 0.25s;
+}
+
+.caixaEmail::placeholder,
+.caixaSenha::placeholder{
+    color: rgba(255,255,255,0.55);
+}
+
+.caixaEmail:focus,
+.caixaSenha:focus{
+    border: 1px solid #ffb347;
+
+    box-shadow:
+        0 0 15px rgba(255,179,71,0.3);
+}
+
+/* BOTÕES */
+
+.btn-login{
+    width: 80%;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(to right, #ffb347, #ffcc70);
+
+    color: #2b1b12;
+
+    font-size: 1rem;
+
+    font-weight: bold;
+
+    margin-top: 10px;
+
+    transition: 0.25s;
+}
+
+.btn-criar{
+    width: 80%;
+
+    height: 50px;
+
+    margin-top: 12px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    background: transparent;
+
+    color: white;
+}
+
+/* ERRO */
+
+#erroLogin{
+    margin-top: 15px;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: #ff6b6b;
+}
+
+.subtitulo-marca{
+    color: rgba(255,255,255,0.72);
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+    font-size: 0.95rem;
+}
+
+.senha-container{
+    width: 100%;
+
+    position: relative;
+}
+
+.caixaSenha{
+    width: 100%;
+
+    padding-right: 45px;
+}
+
+.icone-senha{
+    position: absolute;
+
+    right: 15px;
+
+    top: 40%;
+
+    transform: translateY(-50%);
+
+    cursor: pointer;
+
+    color: rgba(255,255,255,0.7);
+
+    user-select: none;
+}

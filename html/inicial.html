@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Brownie da ENF</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../css/inicial.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+
+
+
+  <!-- BOOTSTRAP -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FONTE -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <!-- ÍCONE -->
+  <link rel="icon" type="image/png" href="../imgs/logo.png">
+
+</head>
+
+<body class="imginicial" style="display: none;">
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container-fluid">
+
+      <a class="navbar-brand" href="inicial.html">
+
+        <img src="../imgs/logo.png" alt="Brownie da ENF" class="logo-navbar">
+
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="menu">
+
+        <li class="nav-item">
+
+          <span id="nomeUsuario" class="text-white me-3 fw-bold">
+          </span>
+
+        </li>
+
+        <ul class="navbar-nav ms-auto align-items-center">
+
+          <!-- ADMIN -->
+          <li class="nav-item">
+
+            <a id="btnAdmin" class="btn btn-warning ms-lg-3 mt-2 mt-lg-0 d-none" href="admin.html">
+              Admin
+            </a>
+
+          </li>
+
+          <!-- INÍCIO -->
+          <li class="nav-item">
+
+            <a class="nav-link active" href="inicial.html">
+              Página Inicial
+            </a>
+
+          </li>
+
+          <!-- PEDIDOS -->
+          <li class="nav-item">
+
+            <a class="btn btn-success ms-lg-3 mt-2 mt-lg-0" href="pedidos.html">
+              Pedidos
+            </a>
+
+          </li>
+
+          <!-- SAIR -->
+          <li class="nav-item">
+
+            <button class="btn btn-danger ms-lg-3 mt-2 mt-lg-0" id="btnSair">
+              Sair
+            </button>
+
+          </li>
+
+        </ul>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+  <!-- CONTEÚDO -->
+  <div class="container text-center mt-4">
+
+    <h1 class="titulo">
+      Brownies ENF
+    </h1>
+
+    <p class="sejabemvindo">
+      - Seja bem vindo. -
+    </p>
+
+  </div>
+
+  <!-- CARDS -->
+  <div class="cards_brownies">
+
+    <!-- CARD 1 -->
+    <div class="card_brownie">
+
+      <img class="brownies" src="../imgs/brownieoreo.png" alt="Brownie de Oreo">
+
+      <p class="texto_ilustrativo">
+        *Imagem ilustrativa*
+      </p>
+
+      <div class="preco_brownie">
+
+        <span class="texto_preco">
+          A partir de
+        </span>
+
+        <h2>
+          R$ 10,00
+        </h2>
+
+      </div>
+
+      <button class="btn btn-warning fw-bold px-4 py-2 rounded-pill" id="btnAgendar">
+        Agendar
+      </button>
+
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="card_brownie">
+
+      <img class="brownies" src="../imgs/em_breve.png" alt="Em breve">
+
+      <button class="btn btn-secondary fw-bold px-4 py-2 rounded-pill em_breve_button">
+        Em breve
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script type="module" src="../jss/inicial.js"></script>
+
+</body>
+
+</html>

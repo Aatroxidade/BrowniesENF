@@ -1,0 +1,477 @@
+/* RESET */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* BODY */
+
+body{
+    font-family: 'Poppins', sans-serif;
+}
+
+/* TÍTULOS */
+
+.titulo{
+    text-align: center;
+    margin-top: 30px;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #ffffff;
+
+    text-shadow:
+        0 0 5px #000000,
+        0 0 10px #000000,
+        0 0 20px #000000;
+}
+
+.sejabemvindo{
+    width: 100%;
+    text-align: center;
+    color: #ececec;
+    opacity: 0.8;
+}
+
+/* LOGIN */
+
+.body-login{
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 20px;
+}
+
+/* FUNDO LOGIN */
+
+.imglogin{
+    background:
+        linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.82)),
+        url("https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=1600&auto=format&fit=crop");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* CARD LOGIN */
+
+.bordalogin{
+    width: 70%;
+    max-width: 480px;
+
+    padding: 50px;
+
+    border-radius: 28px;
+
+    background: rgba(255,255,255,0.08);
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.35);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+}
+
+/* LOGO LOGIN */
+
+.logo-login{
+    width: 95px;
+
+    margin-bottom: 15px;
+
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.4));
+}
+
+/* TÍTULOS LOGIN */
+
+.titulo-marca{
+    font-size: 2rem;
+
+    font-weight: 700;
+
+    color: white;
+
+    letter-spacing: 1px;
+
+    margin-bottom: 5px;
+
+    text-shadow:
+        0 0 10px rgba(0,0,0,0.6);
+}
+
+.subtitulo-marca{
+    color: rgba(255,255,255,0.72);
+
+    text-align: center;
+
+    margin-bottom: 30px;
+
+    font-size: 0.95rem;
+}
+
+.textlogin{
+    color: white;
+
+    font-size: 1.8rem;
+
+    font-weight: 600;
+
+    margin-bottom: 25px;
+}
+
+/* LABELS */
+
+.label-cadastro{
+    width: 100%;
+
+    color: white;
+
+    text-align: left;
+
+    margin-bottom: 6px;
+
+    font-weight: 500;
+}
+
+/* INPUTS */
+
+.caixaEmail,
+.caixaSenha,
+.caixaSenhaCadastro,
+.caixaEmailCadastro,
+.caixaNomeCadastro{
+    width: 100%;
+
+    height: 52px;
+
+    margin-bottom: 18px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    background: rgba(255,255,255,0.08);
+
+    color: white;
+
+    padding-left: 16px;
+
+    outline: none;
+
+    transition: 0.25s;
+}
+
+/* PLACEHOLDER */
+
+.caixaEmail::placeholder,
+.caixaSenha::placeholder,
+.caixaSenhaCadastro::placeholder,
+.caixaEmailCadastro::placeholder,
+.caixaNomeCadastro::placeholder{
+    color: rgba(255,255,255,0.55);
+}
+
+/* FOCUS INPUT */
+
+.caixaEmail:focus,
+.caixaSenha:focus,
+.caixaSenhaCadastro:focus,
+.caixaEmailCadastro:focus,
+.caixaNomeCadastro:focus{
+    border: 1px solid #ffb347;
+
+    box-shadow:
+        0 0 15px rgba(255,179,71,0.3);
+}
+
+/* BOTÕES */
+
+.btn-login{
+    width: 80%;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background:
+        linear-gradient(to right, #ffb347, #ffcc70);
+
+    color: #2b1b12;
+
+    font-size: 1rem;
+
+    font-weight: bold;
+
+    margin-top: 10px;
+
+    transition: 0.25s;
+}
+
+.btn-login:hover{
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 8px 20px rgba(255,179,71,0.35);
+}
+
+.btn-criar{
+    width: 80%;
+
+    height: 50px;
+
+    margin-top: 12px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,0.2);
+
+    background: transparent;
+
+    color: white;
+
+    transition: 0.25s;
+}
+
+.btn-criar:hover{
+    background: rgba(255,255,255,0.08);
+}
+
+/* ERROS */
+
+#erroLogin,
+#erroCadastro{
+    margin-top: 15px;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: #ff6b6b;
+
+    text-shadow:
+        0 0 5px rgba(255,0,0,0.5),
+        0 0 10px rgba(255,0,0,0.3);
+}
+
+/* ANIMAÇÃO ERRO */
+
+.erro-animacao{
+    animation: tremer 0.3s;
+}
+
+@keyframes tremer{
+    0% { transform: translateX(0); }
+
+    25% { transform: translateX(-5px); }
+
+    50% { transform: translateX(5px); }
+
+    75% { transform: translateX(-5px); }
+
+    100% { transform: translateX(0); }
+}
+
+/* BACKGROUND PÁGINAS */
+
+.imginicial{
+    min-height: 100vh;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)),
+        url("https://images.unsplash.com/photo-1606313564200-e75d5e30476c");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+}
+
+/* NAVBAR */
+
+.logo-navbar{
+    height: 50px;
+
+    width: auto;
+}
+
+/* CARDS */
+
+.cards_brownies{
+    display: flex;
+
+    justify-content: center;
+
+    gap: 50px;
+
+    flex-wrap: wrap;
+
+    margin-top: 40px;
+}
+
+.card_brownie{
+    width: 350px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background-color: rgba(255,255,255,0.08);
+
+    text-align: center;
+
+    backdrop-filter: blur(5px);
+}
+
+.brownies{
+    width: 100%;
+
+    border-radius: 20px;
+
+    transition: 0.3s;
+}
+
+.brownies:hover{
+    transform: scale(1.02);
+}
+
+/* TEXTO ILUSTRATIVO */
+
+.texto_ilustrativo{
+    opacity: 0.7;
+
+    color: white;
+
+    font-size: 10px;
+}
+
+/* BOTÃO EM BREVE */
+
+.em_breve_button{
+    margin-top: 57px;
+}
+
+/* AGENDAMENTO */
+
+.card_agendamento{
+    max-width: 500px;
+
+    margin: auto;
+
+    background-color: rgba(255,255,255,0.08);
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    color: white;
+
+    backdrop-filter: blur(5px);
+}
+
+.img_agendamento{
+    width: 100%;
+
+    border-radius: 20px;
+
+    margin-bottom: 20px;
+}
+
+/* OBRIGATÓRIO */
+
+.obrigatorio{
+    color: red;
+
+    font-weight: bold;
+}
+
+/* PEDIDOS */
+
+.card_pedido{
+    background-color: rgba(255,255,255,0.08);
+
+    border-radius: 20px;
+
+    padding: 25px;
+
+    margin-bottom: 25px;
+
+    color: white;
+
+    backdrop-filter: blur(5px);
+}
+
+/* STATUS */
+
+.status_pendente{
+    color: #ffc107;
+
+    font-weight: bold;
+}
+
+.status_aprovado{
+    color: #28a745;
+
+    font-weight: bold;
+}
+
+.status_cancelado{
+    color: #dc3545;
+
+    font-weight: bold;
+}
+
+/* ADMIN */
+
+.lista_admin{
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 30px;
+}
+
+.card_admin{
+    width: 380px;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    background-color: rgba(255,255,255,0.08);
+
+    color: white;
+
+    backdrop-filter: blur(6px);
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    transition: 0.3s;
+}
+
+.card_admin:hover{
+    transform: translateY(-5px);
+}

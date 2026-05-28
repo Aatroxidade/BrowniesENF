@@ -1,0 +1,423 @@
+/* CARD AGENDAMENTO */
+
+.card_agendamento {
+
+    max-width: 520px;
+
+    margin: auto;
+
+    padding: 35px;
+
+    border-radius: 28px;
+
+    background: rgba(255,255,255,0.06);
+
+    border: 1px solid rgba(255,255,255,0.1);
+
+    backdrop-filter: blur(12px);
+
+    color: white;
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.35);
+}
+
+
+/* IMAGEM */
+
+.img_agendamento {
+
+    width: 100%;
+
+    border-radius: 20px;
+
+    margin-bottom: 20px;
+}
+
+
+/* INPUTS */
+
+.card_agendamento input,
+.card_agendamento textarea {
+
+    background: rgba(255,255,255,0.06) !important;
+
+    border: 1px solid rgba(255,255,255,0.12) !important;
+
+    color: white !important;
+
+    border-radius: 14px;
+
+    padding: 14px;
+
+    transition: 0.25s;
+
+    box-shadow: none !important;
+
+    outline: none;
+}
+
+
+/* PLACEHOLDER */
+
+.card_agendamento input::placeholder,
+.card_agendamento textarea::placeholder {
+
+    color: rgba(255,255,255,0.45);
+}
+
+
+/* FOCUS */
+
+.card_agendamento input:focus,
+.card_agendamento textarea:focus {
+
+    border: 1px solid #ffb347 !important;
+
+    box-shadow:
+        0 0 12px rgba(255,179,71,0.25) !important;
+
+    background: rgba(255,255,255,0.08) !important;
+}
+
+
+/* REMOVE AZUL AUTOFILL */
+
+.card_agendamento input:-webkit-autofill {
+
+    -webkit-box-shadow:
+        0 0 0 1000px rgba(30,30,30,0.9) inset !important;
+
+    -webkit-text-fill-color: white !important;
+}
+
+
+/* DATE E TIME */
+
+.card_agendamento input[type="date"],
+.card_agendamento input[type="time"] {
+
+    color-scheme: dark;
+
+    caret-color: transparent;
+}
+
+
+/* REMOVE AZUL DE SELEÇÃO */
+
+.card_agendamento input[type="time"]::-webkit-datetime-edit-hour-field:focus,
+.card_agendamento input[type="time"]::-webkit-datetime-edit-minute-field:focus,
+.card_agendamento input[type="date"]::-webkit-datetime-edit-day-field:focus,
+.card_agendamento input[type="date"]::-webkit-datetime-edit-month-field:focus,
+.card_agendamento input[type="date"]::-webkit-datetime-edit-year-field:focus {
+
+    background: transparent !important;
+
+    color: #ffcc70 !important;
+}
+
+
+/* ÍCONES */
+
+.card_agendamento input[type="date"]::-webkit-calendar-picker-indicator,
+.card_agendamento input[type="time"]::-webkit-calendar-picker-indicator {
+
+    filter: invert(1);
+
+    opacity: 0.7;
+
+    cursor: pointer;
+}
+
+
+/* BOTÃO */
+
+#btnAgendamento {
+
+    width: 100%;
+
+    height: 52px;
+
+    border-radius: 14px;
+
+    border: none;
+
+    font-weight: bold;
+
+    font-size: 1rem;
+
+    transition: 0.25s;
+}
+
+#btnAgendamento:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(255,179,71,0.25);
+}
+
+
+/* MODAL PIX */
+
+.modal_pix {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.75);
+
+    backdrop-filter: blur(6px);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 9999;
+}
+
+.pix_conteudo {
+
+    width: 90%;
+
+    max-width: 420px;
+
+    background: #1b1b1b;
+
+    border-radius: 24px;
+
+    padding: 35px;
+
+    text-align: center;
+
+    color: white;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 0 30px rgba(0,0,0,0.4);
+
+    position: relative;
+}
+
+.qr_pix {
+
+    width: 230px;
+
+    max-width: 100%;
+
+    border-radius: 16px;
+
+    margin: 15px auto 0 auto;
+
+    display: block;
+
+   
+}
+
+.texto_pix {
+
+    opacity: 0.75;
+
+    margin-top: 10px;
+}
+
+
+/* CHAVE PIX */
+
+.caixa_chave_pix {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+    width: 100%;
+
+    margin-top: 25px;
+}
+
+.caixa_chave_pix input {
+
+    width: 100%;
+
+    background: rgba(255,255,255,0.06);
+
+    border: none;
+
+    outline: none;
+
+    border-radius: 12px;
+
+    color: white;
+
+    padding: 12px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+.caixa_chave_pix button {
+
+    width: 100%;
+
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 12px;
+
+    background: #ffb347;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+.caixa_chave_pix button:hover {
+
+    transform: scale(1.03);
+}
+
+
+/* FECHAR MODAL */
+
+.fechar_pix {
+
+    position: absolute;
+
+    top: 15px;
+
+    right: 15px;
+
+    width: 35px;
+
+    height: 35px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,0.08);
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.fechar_pix:hover {
+
+    background: rgba(255,255,255,0.18);
+
+    transform: rotate(90deg);
+}
+
+
+/* AVISO PIX COPIADO */
+
+.aviso_pix {
+
+    position: fixed;
+
+    bottom: 30px;
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: rgba(20,20,20,0.95);
+
+    color: white;
+
+    padding: 12px 22px;
+
+    border-radius: 12px;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    z-index: 99999;
+
+    animation: subirFade 1.5s ease;
+}
+
+@keyframes subirFade {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            translateY(10px);
+    }
+
+    15% {
+
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            translateY(0);
+    }
+
+    85% {
+
+        opacity: 1;
+    }
+
+    100% {
+
+        opacity: 0;
+    }
+}
+
+
+/* RESUMO PREÇO */
+
+.resumo_preco {
+
+    margin-top: 25px;
+
+    padding: 2px;
+
+    border-radius: 18px;
+
+    border: 1px solid rgba(255,255,255,0.08);
+
+    text-align: center;
+}
+
+.resumo_preco span {
+
+    color: rgba(255,255,255,0.55);
+
+    font-size: 14px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.resumo_preco h2 {
+
+    margin-top: 5px;
+
+    color: #ffcc70;
+
+    font-size: 2.2rem;
+
+    font-weight: bold;
+}

@@ -1,0 +1,93 @@
+/* LABELS */
+
+.label-cadastro{
+    width: 100%;
+
+    color: white;
+
+    text-align: left;
+
+    margin-bottom: 6px;
+
+    font-weight: 500;
+}
+
+/* INPUTS */
+
+.caixaSenhaCadastro,
+.caixaEmailCadastro,
+.caixaNomeCadastro{
+    width: 100%;
+
+    height: 52px;
+
+    margin-bottom: 18px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+
+    background: rgba(255,255,255,0.08);
+
+    color: white;
+
+    padding-left: 16px;
+
+    outline: none;
+
+    transition: 0.25s;
+}
+
+.caixaSenhaCadastro::placeholder,
+.caixaEmailCadastro::placeholder,
+.caixaNomeCadastro::placeholder{
+    color: rgba(255,255,255,0.55);
+}
+
+.caixaSenhaCadastro:focus,
+.caixaEmailCadastro:focus,
+.caixaNomeCadastro:focus{
+    border: 1px solid #ffb347;
+
+    box-shadow:
+        0 0 15px rgba(255,179,71,0.3);
+}
+
+/* SENHA */
+
+.senha-container{
+    width: 100%;
+    position: relative;
+}
+
+.icone-senha{
+    position: absolute;
+
+    right: 18px;
+
+    top: 38%;
+
+    transform: translateY(-50%);
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    color: rgba(255,255,255,0.7);
+}
+
+/* ERRO */
+
+#erroCadastro{
+    margin-top: 15px;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: #ff6b6b;
+}
