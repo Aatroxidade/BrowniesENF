@@ -8,18 +8,19 @@ import {
 
 import {
   collection,
-  getDocs,
   onSnapshot,
   updateDoc,
   deleteDoc,
   doc,
+  getDocs
+
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const auth = getAuth(app);
 
 
 // ======================================================
-// VERIFICAR LOGIN
+// LOGIN
 // ======================================================
 
 onAuthStateChanged(auth, async (user) => {
@@ -31,7 +32,6 @@ onAuthStateChanged(auth, async (user) => {
 
   }
 
-  // VERIFICAR ADMIN
   if (user.email !== "eliasgabaldioliveira@gmail.com") {
 
     Swal.fire({
@@ -65,82 +65,136 @@ onAuthStateChanged(auth, async (user) => {
 // CARREGAR PEDIDOS
 // ======================================================
 
-async function carregarPedidos() {
+function carregarPedidos() {
 
   const lista =
     document.getElementById("listaAdmin");
 
- onSnapshot(
+  onSnapshot(
 
-  collection(db, "pedidos"),
+    collection(db, "pedidos"),
 
-  (querySnapshot) => {
+    (querySnapshot) => {
 
-    lista.innerHTML = "";
+      lista.innerHTML = "";
 
-    if (querySnapshot.empty) {
+      if (querySnapshot.empty) {
 
-      lista.innerHTML = `
+        lista.innerHTML = `
 
-        <p class="text-white text-center">
-          Nenhum pedido encontrado.
-        </p>
+          <p class="text-white text-center">
+            Nenhum pedido encontrado.
+          </p>
 
-      `;
+        `;
 
-      return;
+        return;
+
+      }
+
+      let totalPedidos = 0;
+      let totalAprovados = 0;
+      let totalPendentes = 0;
+      let faturamento = 0;
+
+      const busca =
+
+        document
+          .getElementById("buscarPedido")
+          ?.value
+          ?.toLowerCase() || "";
+
+      const filtro =
+
+        document
+          .getElementById("filtroStatus")
+          ?.value || "Todos";
+
+      querySnapshot.forEach((pedidoDoc) => {
+
+        const pedido =
+          pedidoDoc.data();
+
+        totalPedidos++;
+
+        if (pedido.status === "Aprovado") {
+
+          totalAprovados++;
+
+          faturamento +=
+            (pedido.quantidade || 0) * 10;
+
+        }
+
+        if (
+
+          !pedido.status ||
+
+          pedido.status === "Pendente"
+
+        ) {
+
+          totalPendentes++;
+
+        }
+
+        if (
+
+          busca &&
+
+          !pedido.nome
+            .toLowerCase()
+            .includes(busca)
+
+        ) {
+
+          return;
+
+        }
+
+        if (
+
+          filtro !== "Todos" &&
+
+          pedido.status !== filtro
+
+        ) {
+
+          return;
+
+        }
+
+        lista.innerHTML += criarCardPedido(
+
+          pedido,
+
+          pedidoDoc.id
+
+        );
+
+      });
+
+      document.getElementById("totalPedidos").innerText =
+        totalPedidos;
+
+      document.getElementById("totalAprovados").innerText =
+        totalAprovados;
+
+      document.getElementById("totalPendentes").innerText =
+        totalPendentes;
+
+      document.getElementById("faturamentoTotal").innerText =
+        `R$ ${faturamento}`;
 
     }
 
-    querySnapshot.forEach((pedidoDoc) => {
-
-      const pedido = pedidoDoc.data();
-
-      lista.innerHTML += criarCardPedido(
-        pedido,
-        pedidoDoc.id
-      );
-
-    });
-
-  }
-
-);
-
-  // SEM PEDIDOS
-  if (querySnapshot.empty) {
-
-    lista.innerHTML = `
-
-      <p class="text-white text-center">
-        Nenhum pedido encontrado.
-      </p>
-
-    `;
-
-    return;
-
-  }
-
-  lista.innerHTML = "";
-
-  // LISTAR PEDIDOS
-  querySnapshot.forEach((pedidoDoc) => {
-
-    const pedido = pedidoDoc.data();
-
-    lista.innerHTML += criarCardPedido(
-      pedido,
-      pedidoDoc.id
-    );
-
-  });
+  );
 
 }
 
 
 // ======================================================
-// CARD PEDIDO
+// CARD
 // ======================================================
 
 function criarCardPedido(pedido, pedidoId) {
@@ -178,6 +232,11 @@ function criarCardPedido(pedido, pedidoId) {
       <p>
         <strong>Horário:</strong>
         ${pedido.horario}
+      </p>
+
+      <p>
+        <strong>Entrega:</strong>
+        ${pedido.endereco || "Não informado"}
       </p>
 
       <p>
@@ -257,13 +316,11 @@ window.alterarStatus = async (
 
   );
 
-  location.reload();
-
 };
 
 
 // ======================================================
-// EXCLUIR PEDIDO
+// EXCLUIR
 // ======================================================
 
 window.excluirPedido = async (pedidoId) => {
@@ -300,30 +357,29 @@ window.excluirPedido = async (pedidoId) => {
 
     title: "Pedido excluído!",
 
-    timer: 1800,
+    timer: 1500,
 
     showConfirmButton: false
 
   });
 
-  setTimeout(() => {
-
-    location.reload();
-
-  }, 1800);
-
 };
 
 
 // ======================================================
-// BOTÃO SAIR
+// SAIR
 // ======================================================
 
-document.getElementById("btnSair")
-  .addEventListener("click", async () => {
+document.addEventListener("click", async (e) => {
+
+  if (e.target.id === "btnSair") {
+
+    e.preventDefault();
 
     await signOut(auth);
 
     window.location.href = "index.html";
 
-  });
+  }
+
+});

@@ -1,13 +1,194 @@
+/* CONTAINER DOS PEDIDOS */
+
+#listaPedidos{
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 25px;
+
+    max-width: 900px;
+
+    margin: auto;
+}
+
+
+/* CARD */
+
 .card_pedido{
-    background-color: rgba(255,255,255,0.08);
 
-    border-radius: 20px;
+    background: rgba(255,255,255,0.08);
 
-    padding: 25px;
+    border: 1px solid rgba(255,255,255,0.12);
 
-    margin-bottom: 25px;
+    border-radius: 24px;
+
+    padding: 28px;
 
     color: white;
 
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(12px);
+
+    -webkit-backdrop-filter: blur(12px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,0.25);
+
+    transition: 0.25s;
+}
+
+.card_pedido:hover{
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.35);
+}
+
+
+/* TÍTULO DO PRODUTO */
+
+.card_pedido h3{
+
+    color: #ffcc70;
+
+    font-weight: 700;
+
+    margin-bottom: 20px;
+
+    font-size: 1.6rem;
+
+    text-shadow:
+        0 0 10px rgba(255,204,112,0.25);
+}
+
+
+/* TEXTOS */
+
+.card_pedido p{
+
+    margin-bottom: 10px;
+
+    color: rgba(255,255,255,0.92);
+
+    font-size: 15px;
+}
+
+.card_pedido strong{
+
+    color: #ffffff;
+}
+
+
+/* STATUS */
+
+.status_pendente{
+
+    color: #ffc107;
+
+    font-weight: bold;
+}
+
+.status_aprovado{
+
+    color: #35d16f;
+
+    font-weight: bold;
+}
+
+.status_cancelado{
+
+    color: #ff5f5f;
+
+    font-weight: bold;
+}
+
+
+/* BOTÕES */
+
+.card_pedido .btn{
+
+    border-radius: 12px;
+
+    font-weight: 600;
+
+    padding: 8px 18px;
+}
+
+
+/* TÍTULO DA PÁGINA */
+
+.titulo{
+
+    color: white;
+
+    font-size: 3rem;
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+
+    text-shadow:
+        0 0 20px rgba(0,0,0,0.45);
+}
+
+
+/* SUBTÍTULO */
+
+.sejabemvindo{
+
+    color: rgba(255,255,255,0.8);
+
+    font-size: 1rem;
+}
+
+
+/* FUNDO */
+
+.imginicial{
+
+    min-height: 100vh;
+
+    background:
+        linear-gradient(rgba(0,0,0,0.70), rgba(0,0,0,0.90)),
+        url("https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=1600&auto=format&fit=crop");
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-repeat: no-repeat;
+
+    background-attachment: fixed;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px){
+
+    .titulo{
+
+        font-size: 2.2rem;
+    }
+
+    .card_pedido{
+
+        padding: 20px;
+    }
+
+    .card_pedido h3{
+
+        font-size: 1.3rem;
+    }
+
+    .card_pedido .d-flex{
+
+        flex-direction: column;
+    }
+
+    .card_pedido .btn{
+
+        width: 100%;
+    }
 }

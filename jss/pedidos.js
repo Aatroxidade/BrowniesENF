@@ -175,8 +175,13 @@ function criarCardPedido(pedido, pedidoId) {
       </p>
 
       <p>
+       <strong>📍 Entrega:</strong>
+       ${pedido.endereco}
+      </p>
 
-        <strong>Status:</strong>
+      <p>
+
+        <strong>📦 Status:</strong>
 
         <span class="
           ${pedido.status === "Aprovado" ? "status_aprovado" : ""}

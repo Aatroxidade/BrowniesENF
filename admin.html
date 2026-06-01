@@ -100,7 +100,65 @@
       Gerencie os pedidos dos clientes
     </p>
 
+    <!-- DASHBOARD -->
+<div class="container mt-5">
+
+  <div class="dashboard-grid">
+
+    <div class="dashboard-card">
+      <h5>Total Pedidos</h5>
+      <span id="totalPedidos">0</span>
+    </div>
+
+    <div class="dashboard-card aprovado">
+      <h5>Aprovados</h5>
+      <span id="totalAprovados">0</span>
+    </div>
+
+    <div class="dashboard-card pendente">
+      <h5>Pendentes</h5>
+      <span id="totalPendentes">0</span>
+    </div>
+
+    <div class="dashboard-card faturamento">
+      <h5>Faturamento</h5>
+      <span id="faturamentoTotal">R$ 0</span>
+    </div>
+
   </div>
+
+  <div class="filtros_admin">
+
+    <input
+      type="text"
+      id="buscarPedido"
+      class="form-control"
+      placeholder="Buscar cliente..."
+    >
+
+    <select
+      id="filtroStatus"
+      class="form-select"
+    >
+
+      <option value="Todos">Todos</option>
+      <option value="Aprovado">Aprovado</option>
+      <option value="Pendente">Pendente</option>
+      <option value="Cancelado">Cancelado</option>
+
+    </select>
+
+  </div>
+
+</div>
+
+  </div>
+
+  <div class="text-center mb-4">
+
+ 
+
+</div>
 
   <!-- PEDIDOS -->
   <div class="container mt-5">

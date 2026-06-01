@@ -51,6 +51,9 @@ const dataInput =
 const horarioInput =
   document.getElementById("horario");
 
+  const enderecoInput =
+  document.getElementById("endereco");
+
 const observacaoInput =
   document.getElementById("observacao");
 
@@ -146,6 +149,9 @@ onAuthStateChanged(auth, async (user) => {
       horarioInput.value =
         pedido.horario;
 
+      enderecoInput.value =
+        pedido.endereco || "";
+
       observacaoInput.value =
         pedido.observacao || "";
 
@@ -174,6 +180,9 @@ onAuthStateChanged(auth, async (user) => {
     const horario =
       horarioInput.value;
 
+    const endereco =
+      enderecoInput.value;
+
     const observacao =
       observacaoInput.value;
 
@@ -182,7 +191,7 @@ onAuthStateChanged(auth, async (user) => {
     // CAMPOS
     // ======================================================
 
-    if (!nome || !quantidade || !data || !horario) {
+    if (!nome || !quantidade || !data || !horario || !endereco) {
 
       Swal.fire({
 
@@ -285,6 +294,7 @@ onAuthStateChanged(auth, async (user) => {
             quantidade,
             data,
             horario,
+            endereco,
             observacao
 
           }
@@ -327,6 +337,8 @@ onAuthStateChanged(auth, async (user) => {
               data,
 
               horario,
+
+              endereco,
 
               observacao
 
