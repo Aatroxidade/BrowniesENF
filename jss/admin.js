@@ -246,15 +246,7 @@ function criarCardPedido(pedido, pedidoId) {
 
       <p>
 
-  <strong>Pagamento:</strong>
-
-  <span class="pagamento_pix">
-
-     ${pedido.pagamento || "Pendente"}
-
-  </span>
-
-</p>
+ 
 
       <p>
 
