@@ -98,3 +98,35 @@
 
     color: #ffb3b3;
 }
+
+/* MOBILE */
+
+@media (max-width: 991px){
+
+    .navbar-nav{
+
+        gap: 12px;
+
+        margin-top: 15px;
+
+    }
+
+    .nav-btn{
+
+        display: block;
+
+        width: 100%;
+
+        text-align: center;
+
+        margin-right: 0;
+
+    }
+
+    .navbar-collapse{
+
+        padding-top: 10px;
+
+    }
+
+}

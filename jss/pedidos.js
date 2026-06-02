@@ -59,6 +59,14 @@ onAuthStateChanged(auth, async (user) => {
 
   }
 
+  if (user.email === "eliasgabaldioliveira@gmail.com") {
+
+  document
+    .getElementById("itemAdmin")
+    .classList.remove("d-none");
+
+}
+
 });
 
 

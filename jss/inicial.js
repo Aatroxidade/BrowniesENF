@@ -58,7 +58,7 @@ if (docSnap.exists()) {
   if (user.email === "eliasgabaldioliveira@gmail.com") {
 
     document
-      .getElementById("btnAdmin")
+      .getElementById("itemAdmin")
       .classList.remove("d-none");
 
   }

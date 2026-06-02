@@ -119,6 +119,24 @@ onAuthStateChanged(auth, async (user) => {
 
   }
 
+    if (user.email === "eliasgabaldioliveira@gmail.com") {
+  
+      document
+        .getElementById("itemAdmin")
+        .classList.remove("d-none");
+  
+    }
+  
+      document.body.style.display = "block";
+  
+      document.getElementById("btnSair").addEventListener("click", async () => {
+  
+    await signOut(auth);
+  
+    window.location.href = "index.html";
+  
+  });
+
 
   // ======================================================
   // EDITAR PEDIDO
