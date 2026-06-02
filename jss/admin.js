@@ -204,7 +204,7 @@ function criarCardPedido(pedido, pedidoId) {
     <div class="card_admin">
 
       <h3>
-        🍪 ${pedido.produto}
+         ${pedido.produto}
       </h3>
 
       <hr>
@@ -235,7 +235,7 @@ function criarCardPedido(pedido, pedidoId) {
       </p>
 
       <p>
-        <strong>Entrega:</strong>
+        <strong>Endereço:</strong>
         ${pedido.endereco || "Não informado"}
       </p>
 
@@ -243,6 +243,18 @@ function criarCardPedido(pedido, pedidoId) {
         <strong>Observações:</strong>
         ${pedido.observacao || "Nenhuma"}
       </p>
+
+      <p>
+
+  <strong>Pagamento:</strong>
+
+  <span class="pagamento_pix">
+
+     ${pedido.pagamento || "Pendente"}
+
+  </span>
+
+</p>
 
       <p>
 
@@ -259,6 +271,20 @@ function criarCardPedido(pedido, pedidoId) {
         </span>
 
       </p>
+
+      <p>
+
+  <strong>Pagamento:</strong>
+
+  <span class="
+    ${pedido.pagamento === "Pagamento via PIX" ? "status_aprovado" : ""}
+  ">
+
+    ${pedido.pagamento || "Pendente"}
+
+  </span>
+
+</p>
 
       <div class="d-flex gap-2 mt-3 flex-wrap">
 

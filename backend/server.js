@@ -47,6 +47,8 @@ app.get("/", (req, res) => {
 app.post("/pedido", async (req, res) => {
 
   console.log("REQ BODY:", req.body);
+  console.log("WEBHOOK RECEBIDO");
+  console.log(req.query);
 
   try {
 
@@ -94,6 +96,8 @@ app.post("/pedido", async (req, res) => {
         ...dados,
 
         status: "Pendente",
+
+        pagamento: "Pendente",
 
         pagamentoId: pagamento.id,
 
@@ -193,7 +197,9 @@ app.post("/webhook", async (req, res) => {
 
         await docItem.ref.update({
 
-          status: "Aprovado"
+          status: "Aprovado",
+
+          pagamento: "Pagamento via PIX"
 
         });
 

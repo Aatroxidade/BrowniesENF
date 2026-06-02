@@ -340,7 +340,9 @@ onAuthStateChanged(auth, async (user) => {
 
               endereco,
 
-              observacao
+              observacao,
+
+              metodoPagamento: "PIX"
 
             })
 
