@@ -124,6 +124,55 @@ app.post("/pedido", async (req, res) => {
 
       });
 
+      await enviarTelegram(
+
+`🍪 NOVO PEDIDO
+
+👤 Cliente: ${dados.nome}
+
+📦 Produto: ${dados.produto}
+
+🔢 Quantidade: ${dados.quantidade}
+
+📅 Data: ${dados.data}
+
+⏰ Horário: ${dados.horario}
+
+📍 Endereço: ${dados.endereco || "Não informado"}
+
+📝 Observação: ${dados.observacao || "Nenhuma"}`
+
+);
+
+      const pedidoRef =
+  await db.collection("pedidos").add({
+
+    ...dados,
+
+    status: "Pendente",
+
+    pagamentoId: pagamento.id,
+
+    criadoEm: new Date()
+
+  });
+
+await enviarTelegram(
+
+`🍪 NOVO PEDIDO
+
+Cliente: ${dados.nome}
+
+Produto: ${dados.produto}
+
+Quantidade: ${dados.quantidade}
+
+Data: ${dados.data}
+
+Horário: ${dados.horario}`
+
+);
+
 
     // =========================
     // RESPOSTA
@@ -227,6 +276,16 @@ app.post("/webhook", async (req, res) => {
       console.log("Pedido aprovado!");
 
     }
+
+    await enviarTelegram(
+
+`✅ PIX APROVADO
+
+Pedido: ${docItem.id}
+
+Valor: R$ ${pagamento.transaction_amount}`
+
+);
 
     res.sendStatus(200);
 
