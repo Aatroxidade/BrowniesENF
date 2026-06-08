@@ -401,3 +401,11 @@ document.addEventListener("click", async (e) => {
   }
 
 });
+
+document
+  .getElementById("buscarPedido")
+  .addEventListener("input", carregarPedidos);
+
+document
+  .getElementById("filtroStatus")
+  .addEventListener("change", carregarPedidos);
