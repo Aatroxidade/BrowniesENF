@@ -140,7 +140,11 @@ app.post("/pedido", async (req, res) => {
 
 📍 Endereço: ${dados.endereco || "Não informado"}
 
-📝 Observação: ${dados.observacao || "Nenhuma"}`
+📝 Observação: ${dados.observacao || "Nenhuma"}
+
+🔗 Painel Admin:
+https://aatroxidade.github.io/BrowniesENF/admin.html`
+
 
 );
 
@@ -223,31 +227,50 @@ app.post("/webhook", async (req, res) => {
     console.log("STATUS PIX:", pagamento.status);
 
     // PAGAMENTO APROVADO
-    if (pagamento.status === "approved") {
+  if (pagamento.status === "approved") {
 
-      const snapshot = await db
+  const snapshot = await db
 
-        .collection("pedidos")
+    .collection("pedidos")
 
-        .where("pagamentoId", "==", pagamento.id)
+    .where("pagamentoId", "==", pagamento.id)
 
-        .get();
+    .get();
 
-      snapshot.forEach(async (docItem) => {
+  for (const docItem of snapshot.docs) {
 
-        await docItem.ref.update({
+    const pedido = docItem.data();
 
-          status: "Aprovado",
+    await docItem.ref.update({
 
-          pagamento: "Pagamento via PIX"
+      status: "Aprovado",
 
-        });
+      pagamento: "Pagamento via PIX"
 
-      });
+    });
 
-      console.log("Pedido aprovado!");
+    await enviarTelegram(
 
-    }
+`✅ PIX APROVADO
+
+👤 Cliente: ${pedido.nome}
+
+📦 Produto: ${pedido.produto}
+
+🔢 Quantidade: ${pedido.quantidade}
+
+💰 Valor: R$ ${pagamento.transaction_amount}
+
+🔗 Painel Admin:
+https://aatroxidade.github.io/BrowniesENF/admin.html`
+
+    );
+
+  }
+
+  console.log("Pedido aprovado!");
+
+}
 
     await enviarTelegram(
 
