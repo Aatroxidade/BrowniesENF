@@ -144,34 +144,6 @@ app.post("/pedido", async (req, res) => {
 
 );
 
-      const pedidoRef =
-  await db.collection("pedidos").add({
-
-    ...dados,
-
-    status: "Pendente",
-
-    pagamentoId: pagamento.id,
-
-    criadoEm: new Date()
-
-  });
-
-await enviarTelegram(
-
-`🍪 NOVO PEDIDO
-
-Cliente: ${dados.nome}
-
-Produto: ${dados.produto}
-
-Quantidade: ${dados.quantidade}
-
-Data: ${dados.data}
-
-Horário: ${dados.horario}`
-
-);
 
 
     // =========================
