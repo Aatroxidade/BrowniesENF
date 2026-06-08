@@ -11,36 +11,25 @@ const { MercadoPagoConfig, Payment } = require("mercadopago");
 
 const app = express();
 
+const TOKEN = process.env.TELEGRAM_TOKEN;
+
 async function enviarTelegram(mensagem) {
 
   await fetch(
-
-    "https://api.telegram.org/bot8841677432:AAGZsVeYa8j6Onb5cRIUrbr9E8sFcJarNZ0/sendMessage",
-
+    `https://api.telegram.org/bot${process.env.TELEGRAM_TOKEN}/sendMessage`,
     {
-
       method: "POST",
-
       headers: {
-
         "Content-Type": "application/json"
-
       },
-
       body: JSON.stringify({
-
         chat_id: "8870188343",
-
         text: mensagem
-
       })
-
     }
-
   );
 
 }
-
 app.use(cors());
 app.use(express.json());
 
