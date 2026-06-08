@@ -57,11 +57,16 @@ const horarioInput =
 const observacaoInput =
   document.getElementById("observacao");
 
+  const formaPagamentoInput =
+  document.getElementById("formaPagamento");
+
 const btnAgendamento =
   document.getElementById("btnAgendamento");
 
 const precoTotal =
   document.getElementById("precoTotal");
+
+  
 
 
 // ======================================================
@@ -204,12 +209,22 @@ onAuthStateChanged(auth, async (user) => {
     const observacao =
       observacaoInput.value;
 
+      const formaPagamento =
+  formaPagamentoInput.value;
+
 
     // ======================================================
     // CAMPOS
     // ======================================================
 
-    if (!nome || !quantidade || !data || !horario || !endereco) {
+    if (
+  !nome ||
+  !quantidade ||
+  !data ||
+  !horario ||
+  !endereco ||
+  !formaPagamento
+) {
 
       Swal.fire({
 
@@ -360,7 +375,7 @@ onAuthStateChanged(auth, async (user) => {
 
               observacao,
 
-              metodoPagamento: "PIX"
+              metodoPagamento: formaPagamento
 
             })
 
@@ -378,54 +393,50 @@ onAuthStateChanged(auth, async (user) => {
 
         }
 
-        const dados =
-          await resposta.json();
+ const dados =
+  await resposta.json();
 
-        console.log(dados);
+if (formaPagamento === "PIX") {
 
+  const qrCodePix =
+    document.getElementById("qrCodePix");
 
-        // ======================================================
-        // QR CODE
-        // ======================================================
+  qrCodePix.src =
+    `data:image/png;base64,${dados.qrCodeBase64}`;
 
-        const qrCodePix =
-          document.getElementById("qrCodePix");
+  const chavePix =
+    document.getElementById("chavePix");
 
-        if (qrCodePix) {
+  chavePix.value =
+    dados.qrCode;
 
-          qrCodePix.src =
-            `data:image/png;base64,${dados.qrCodeBase64}`;
+  document
+    .getElementById("modalPix")
+    .classList.remove("d-none");
 
-        }
+} else {
 
+  Swal.fire({
 
-        // ======================================================
-        // PIX COPIA E COLA
-        // ======================================================
+    icon: "success",
 
-        const chavePix =
-          document.getElementById("chavePix");
+    title: "Pedido enviado!",
 
-        if (chavePix) {
+    text: "Seu pedido foi enviado e será analisado.",
 
-          chavePix.value =
-            dados.qrCode;
+    confirmButtonColor: "#d48a27"
 
-        }
+  });
 
+  setTimeout(() => {
 
-        // ======================================================
-        // ABRIR MODAL
-        // ======================================================
+    window.location.href =
+      "pedidos.html";
 
-        const modalPix =
-          document.getElementById("modalPix");
+  }, 2000);
 
-        if (modalPix) {
+}
 
-          modalPix.classList.remove("d-none");
-
-        }
 
       }
 

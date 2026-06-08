@@ -76,6 +76,45 @@ app.post("/pedido", async (req, res) => {
     const total =
       dados.quantidade * 10;
 
+      if (dados.formaPagamento === "DINHEIRO") {
+
+  const pedidoRef =
+    await db.collection("pedidos").add({
+
+      ...dados,
+
+      status: "Pendente",
+
+      pagamento: "Dinheiro",
+
+      criadoEm: new Date()
+
+    });
+
+  await enviarTelegram(
+
+`🍪 NOVO PEDIDO (DINHEIRO)
+
+Cliente: ${dados.nome}
+
+Produto: ${dados.produto}
+
+Quantidade: ${dados.quantidade}`
+
+  );
+
+  return res.json({
+
+    sucesso: true,
+
+    pedidoId: pedidoRef.id,
+
+    pagamento: "DINHEIRO"
+
+  });
+
+}
+
 
     // =========================
     // CRIAR PIX
@@ -272,15 +311,6 @@ https://aatroxidade.github.io/BrowniesENF/admin.html`
 
 }
 
-    await enviarTelegram(
-
-`✅ PIX APROVADO
-
-Pedido: ${docItem.id}
-
-Valor: R$ ${pagamento.transaction_amount}`
-
-);
 
     res.sendStatus(200);
 
