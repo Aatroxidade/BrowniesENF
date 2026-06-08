@@ -173,6 +173,8 @@ Quantidade: ${dados.quantidade}`
 
 🔢 Quantidade: ${dados.quantidade}
 
+💳 Pagamento: ${dados.formaPagamento}
+
 📅 Data: ${dados.data}
 
 ⏰ Horário: ${dados.horario}
@@ -297,6 +299,8 @@ app.post("/webhook", async (req, res) => {
 📦 Produto: ${pedido.produto}
 
 🔢 Quantidade: ${pedido.quantidade}
+
+💳 Pagamento: PIX
 
 💰 Valor: R$ ${pagamento.transaction_amount}
 
