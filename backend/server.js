@@ -104,7 +104,7 @@ app.post("/pedido", async (req, res) => {
 
 🔢 Quantidade: ${dados.quantidade}
 
-💳 Pagamento: ${dados.metodoPagamento}
+💰 Pagamento: ${dados.metodoPagamento}
 
 📅 Data: ${dados.data}
 

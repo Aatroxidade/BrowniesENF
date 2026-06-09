@@ -12,7 +12,10 @@ import {
   updateDoc,
   deleteDoc,
   doc,
-  getDocs
+  getDocs,
+  query,
+  orderBy
+
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -70,9 +73,17 @@ function carregarPedidos() {
   const lista =
     document.getElementById("listaAdmin");
 
-  onSnapshot(
+const pedidosQuery = query(
 
-    collection(db, "pedidos"),
+  collection(db, "pedidos"),
+
+  orderBy("criadoEm", "desc")
+
+);
+
+onSnapshot(
+
+  pedidosQuery,
 
     (querySnapshot) => {
 
@@ -223,6 +234,16 @@ function criarCardPedido(pedido, pedidoId) {
         <strong>Quantidade:</strong>
         ${pedido.quantidade}
       </p>
+
+      <p>
+  <strong>Valor:</strong>
+  R$ ${(pedido.quantidade || 0) * 10}
+</p>
+
+<p>
+  <strong>Forma de pagamento:</strong>
+  ${pedido.formaPagamento || "Não informado"}
+</p>
 
       <p>
         <strong>Data:</strong>
@@ -409,3 +430,8 @@ document
 document
   .getElementById("filtroStatus")
   .addEventListener("change", carregarPedidos);
+
+  <p>
+  <strong>Valor:</strong>
+  R$ ${(pedido.quantidade || 0) * 10}
+</p>
