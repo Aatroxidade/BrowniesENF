@@ -51,13 +51,13 @@ const dataInput =
 const horarioInput =
   document.getElementById("horario");
 
-  const enderecoInput =
+const enderecoInput =
   document.getElementById("endereco");
 
 const observacaoInput =
   document.getElementById("observacao");
 
-  const formaPagamentoInput =
+const formaPagamentoInput =
   document.getElementById("formaPagamento");
 
 const btnAgendamento =
@@ -66,7 +66,7 @@ const btnAgendamento =
 const precoTotal =
   document.getElementById("precoTotal");
 
-  
+
 
 
 // ======================================================
@@ -124,22 +124,22 @@ onAuthStateChanged(auth, async (user) => {
 
   }
 
-    if (user.email === "eliasgabaldioliveira@gmail.com") {
-  
-      document
-        .getElementById("itemAdmin")
-        .classList.remove("d-none");
-  
-    }
-  
-      document.body.style.display = "block";
-  
-      document.getElementById("btnSair").addEventListener("click", async () => {
-  
+  if (user.email === "eliasgabaldioliveira@gmail.com") {
+
+    document
+      .getElementById("itemAdmin")
+      .classList.remove("d-none");
+
+  }
+
+  document.body.style.display = "block";
+
+  document.getElementById("btnSair").addEventListener("click", async () => {
+
     await signOut(auth);
-  
+
     window.location.href = "index.html";
-  
+
   });
 
 
@@ -155,25 +155,25 @@ onAuthStateChanged(auth, async (user) => {
     const pedidoSnap =
       await getDoc(pedidoRef);
 
-      const pedidoAtual =
-  pedidoSnap.data();
+    const pedidoAtual =
+      pedidoSnap.data();
 
-  if (
+    if (
 
-  pedidoAtual.pagamento === "Dinheiro" &&
+      pedidoAtual.pagamento === "Dinheiro" &&
 
-  formaPagamento === "PIX"
+      formaPagamento === "PIX"
 
-) {
+    ) {
 
-  // gerar PIX
+      // gerar PIX
 
-}
+    }
 
     if (pedidoSnap.exists()) {
 
       formaPagamentoInput.value =
-  pedido.formaPagamento || "";
+        pedido.formaPagamento || "";
 
       const pedido =
         pedidoSnap.data();
@@ -227,8 +227,8 @@ onAuthStateChanged(auth, async (user) => {
     const observacao =
       observacaoInput.value;
 
-      const formaPagamento =
-  formaPagamentoInput.value;
+    const formaPagamento =
+      formaPagamentoInput.value;
 
 
     // ======================================================
@@ -236,13 +236,13 @@ onAuthStateChanged(auth, async (user) => {
     // ======================================================
 
     if (
-  !nome ||
-  !quantidade ||
-  !data ||
-  !horario ||
-  !endereco ||
-  !formaPagamento
-) {
+      !nome ||
+      !quantidade ||
+      !data ||
+      !horario ||
+      !endereco ||
+      !formaPagamento
+    ) {
 
       Swal.fire({
 
@@ -333,111 +333,120 @@ onAuthStateChanged(auth, async (user) => {
       // EDITAR
       // ======================================================
 
-     if (pedidoId) {
+      if (pedidoId) {
 
-  const pedidoRef =
-    doc(db, "pedidos", pedidoId);
+        const pedidoRef =
+          doc(db, "pedidos", pedidoId);
 
-  const pedidoSnap =
-    await getDoc(pedidoRef);
+        const pedidoSnap =
+          await getDoc(pedidoRef);
 
-  const pedidoAntigo =
-    pedidoSnap.data();
+        const pedidoAntigo =
+          pedidoSnap.data();
 
-  await updateDoc(
+        await updateDoc(
 
-    pedidoRef,
+          pedidoRef,
 
-    {
+          {
 
-      nome,
-      quantidade,
-      data,
-      horario,
-      endereco,
-      observacao,
-      formaPagamento: formaPagamento
+            nome,
+            quantidade,
+            data,
+            horario,
+            endereco,
+            observacao,
+            formaPagamento: formaPagamento
 
-    }
+          }
 
-  );
+        );
 
-  if (
+        if (
 
-    pedidoAntigo.pagamento === "Dinheiro" &&
+          pedidoAntigo.pagamento === "Dinheiro" &&
 
-    formaPagamento === "PIX"
+          formaPagamento === "PIX"
 
-  ) {
+        ) {
 
-    const respostaPix = await fetch(
+          const respostaPix = await fetch(
 
-      "https://browniesenf.onrender.com/gerar-pix",
+            "https://browniesenf.onrender.com/gerar-pix",
 
-      {
+            {
 
-        method: "POST",
+              method: "POST",
 
-        headers: {
+              headers: {
 
-          "Content-Type": "application/json"
+                "Content-Type": "application/json"
 
-        },
+              },
 
-        body: JSON.stringify({
+              body: JSON.stringify({
+                usuario: user.email,
 
-          pedidoId,
+                produto: "Brownie de Oreo",
 
-          quantidade,
+                nome,
 
-          produto: "Brownie de Oreo",
+                quantidade,
 
-          usuario: user.email
+                data,
 
-        })
+                horario,
+
+                endereco,
+
+                observacao,
+
+                formaPagamento
+
+              })
+
+            }
+
+          );
+
+          const dadosPix =
+            await respostaPix.json();
+
+          const qrCodePix =
+            document.getElementById("qrCodePix");
+
+          qrCodePix.src =
+            `data:image/png;base64,${dadosPix.qrCodeBase64}`;
+
+          document.getElementById("chavePix").value =
+            dadosPix.qrCode;
+
+          document
+            .getElementById("modalPix")
+            .classList.remove("d-none");
+
+          return;
+
+        }
+
+        Swal.fire({
+
+          icon: "success",
+
+          title: "Pedido atualizado!",
+
+          confirmButtonColor: "#d48a27"
+
+        });
+
+        setTimeout(() => {
+
+          window.location.href =
+            "pedidos.html";
+
+        }, 1500);
 
       }
-
-    );
-
-    const dadosPix =
-      await respostaPix.json();
-
-    const qrCodePix =
-      document.getElementById("qrCodePix");
-
-    qrCodePix.src =
-      `data:image/png;base64,${dadosPix.qrCodeBase64}`;
-
-    document.getElementById("chavePix").value =
-      dadosPix.qrCode;
-
-    document
-      .getElementById("modalPix")
-      .classList.remove("d-none");
-
-    return;
-
-  }
-
-  Swal.fire({
-
-    icon: "success",
-
-    title: "Pedido atualizado!",
-
-    confirmButtonColor: "#d48a27"
-
-  });
-
-  setTimeout(() => {
-
-    window.location.href =
-      "pedidos.html";
-
-  }, 1500);
-
-}
 
 
       // ======================================================
@@ -496,49 +505,49 @@ onAuthStateChanged(auth, async (user) => {
 
         }
 
- const dados =
-  await resposta.json();
+        const dados =
+          await resposta.json();
 
-if (formaPagamento === "PIX") {
+        if (formaPagamento === "PIX") {
 
-  const qrCodePix =
-    document.getElementById("qrCodePix");
+          const qrCodePix =
+            document.getElementById("qrCodePix");
 
-  qrCodePix.src =
-    `data:image/png;base64,${dados.qrCodeBase64}`;
+          qrCodePix.src =
+            `data:image/png;base64,${dados.qrCodeBase64}`;
 
-  const chavePix =
-    document.getElementById("chavePix");
+          const chavePix =
+            document.getElementById("chavePix");
 
-  chavePix.value =
-    dados.qrCode;
+          chavePix.value =
+            dados.qrCode;
 
-  document
-    .getElementById("modalPix")
-    .classList.remove("d-none");
+          document
+            .getElementById("modalPix")
+            .classList.remove("d-none");
 
-} else {
+        } else {
 
-  Swal.fire({
+          Swal.fire({
 
-    icon: "success",
+            icon: "success",
 
-    title: "Pedido enviado!",
+            title: "Pedido enviado!",
 
-    text: "Seu pedido foi enviado e será analisado.",
+            text: "Seu pedido foi enviado e será analisado.",
 
-    confirmButtonColor: "#d48a27"
+            confirmButtonColor: "#d48a27"
 
-  });
+          });
 
-  setTimeout(() => {
+          setTimeout(() => {
 
-    window.location.href =
-      "pedidos.html";
+            window.location.href =
+              "pedidos.html";
 
-  }, 2000);
+          }, 2000);
 
-}
+        }
 
 
       }
