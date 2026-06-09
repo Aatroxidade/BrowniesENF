@@ -356,7 +356,7 @@ onAuthStateChanged(auth, async (user) => {
       horario,
       endereco,
       observacao,
-      metodoPagamento: formaPagamento
+      formaPagamento: formaPagamento
 
     }
 
@@ -478,7 +478,7 @@ onAuthStateChanged(auth, async (user) => {
 
               observacao,
 
-              metodoPagamento: formaPagamento
+              formaPagamento: formaPagamento
 
             })
 
