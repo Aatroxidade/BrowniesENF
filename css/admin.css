@@ -184,3 +184,86 @@
 
     margin-top: 4px;
 }
+
+/* =======================================
+   FILTRO DE DATA
+======================================= */
+
+#filtroData {
+
+  width: 240px;
+
+  background: rgba(255, 193, 7, 0.12);
+
+  border: 2px solid rgba(138, 133, 119, 0.4);
+
+  color: #fff;
+
+  border-radius: 14px;
+
+  padding: 12px 16px;
+
+  font-weight: 600;
+
+  backdrop-filter: blur(10px);
+
+  transition: all 0.25s ease;
+
+  box-shadow:
+    0 0 15px rgba(100, 98, 89, 0.15);
+
+}
+
+#filtroData:hover {
+
+  border-color: #777672;
+
+  box-shadow:
+    0 0 20px rgba(105, 103, 98, 0.3);
+
+}
+
+#filtroData:focus {
+
+  outline: none;
+
+  border-color: #777673;
+
+  box-shadow:
+    0 0 0 4px rgba(255, 193, 7, 0.2);
+
+}
+
+/* Ícone calendário */
+
+#filtroData::-webkit-calendar-picker-indicator {
+
+  cursor: pointer;
+
+  filter: invert(1);
+
+  opacity: 0.9;
+
+}
+
+.filtro-data-box {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+}
+
+.filtro-data-box label {
+
+  color: #ffc107;
+
+  font-weight: 700;
+
+  font-size: 14px;
+
+  letter-spacing: 0.5px;
+
+}

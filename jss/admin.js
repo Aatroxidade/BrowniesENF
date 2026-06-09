@@ -68,140 +68,155 @@ onAuthStateChanged(auth, async (user) => {
 // CARREGAR PEDIDOS
 // ======================================================
 
+let todosPedidos = [];
+
 function carregarPedidos() {
+
+  const pedidosQuery = query(
+    collection(db, "pedidos"),
+    orderBy("criadoEm", "desc")
+  );
+
+  onSnapshot(pedidosQuery, (querySnapshot) => {
+
+    todosPedidos = [];
+
+    querySnapshot.forEach((docItem) => {
+
+      todosPedidos.push({
+        id: docItem.id,
+        ...docItem.data()
+      });
+
+    });
+
+    renderizarPedidos();
+
+  });
+
+}
+
+function renderizarPedidos() {
 
   const lista =
     document.getElementById("listaAdmin");
 
-const pedidosQuery = query(
+  lista.innerHTML = "";
 
-  collection(db, "pedidos"),
+  let totalPedidos = 0;
+  let totalAprovados = 0;
+  let totalPendentes = 0;
+  let faturamento = 0;
+  let browniesVendidos = 0;
 
-  orderBy("criadoEm", "desc")
+  const busca =
+    document.getElementById("buscarPedido")
+    ?.value?.toLowerCase() || "";
 
-);
+  const filtro =
+    document.getElementById("filtroStatus")
+    ?.value || "Todos";
 
-onSnapshot(
+  const filtroData =
+    document.getElementById("filtroData")
+    ?.value || "";
 
-  pedidosQuery,
+  todosPedidos.forEach((pedido) => {
 
-    (querySnapshot) => {
+    totalPedidos++;
 
-      lista.innerHTML = "";
+    let dataPedidoFormatada = "";
 
-      if (querySnapshot.empty) {
+    if (pedido.data) {
 
-        lista.innerHTML = `
+      const partes =
+        pedido.data.split("/");
 
-          <p class="text-white text-center">
-            Nenhum pedido encontrado.
-          </p>
-
-        `;
-
-        return;
-
-      }
-
-      let totalPedidos = 0;
-      let totalAprovados = 0;
-      let totalPendentes = 0;
-      let faturamento = 0;
-
-      const busca =
-
-        document
-          .getElementById("buscarPedido")
-          ?.value
-          ?.toLowerCase() || "";
-
-      const filtro =
-
-        document
-          .getElementById("filtroStatus")
-          ?.value || "Todos";
-
-      querySnapshot.forEach((pedidoDoc) => {
-
-        const pedido =
-          pedidoDoc.data();
-
-        totalPedidos++;
-
-        if (pedido.status === "Aprovado") {
-
-          totalAprovados++;
-
-          faturamento +=
-            (pedido.quantidade || 0) * 10;
-
-        }
-
-        if (
-
-          !pedido.status ||
-
-          pedido.status === "Pendente"
-
-        ) {
-
-          totalPendentes++;
-
-        }
-
-        if (
-
-          busca &&
-
-          !pedido.nome
-            .toLowerCase()
-            .includes(busca)
-
-        ) {
-
-          return;
-
-        }
-
-        if (
-
-          filtro !== "Todos" &&
-
-          pedido.status !== filtro
-
-        ) {
-
-          return;
-
-        }
-
-        lista.innerHTML += criarCardPedido(
-
-          pedido,
-
-          pedidoDoc.id
-
-        );
-
-      });
-
-      document.getElementById("totalPedidos").innerText =
-        totalPedidos;
-
-      document.getElementById("totalAprovados").innerText =
-        totalAprovados;
-
-      document.getElementById("totalPendentes").innerText =
-        totalPendentes;
-
-      document.getElementById("faturamentoTotal").innerText =
-        `R$ ${faturamento}`;
+      dataPedidoFormatada =
+        `${partes[2]}-${partes[1]}-${partes[0]}`;
 
     }
 
-  );
+    if (pedido.status === "Aprovado") {
+
+      totalAprovados++;
+
+      if (
+        !filtroData ||
+        dataPedidoFormatada === filtroData
+      ) {
+
+        faturamento +=
+          (pedido.quantidade || 0) * 10;
+
+        browniesVendidos +=
+          pedido.quantidade || 0;
+
+      }
+
+    }
+
+    if (
+      !pedido.status ||
+      pedido.status === "Pendente"
+    ) {
+
+      totalPendentes++;
+
+    }
+
+    if (
+      busca &&
+      !pedido.nome?.toLowerCase().includes(busca)
+    ) {
+      return;
+    }
+
+    if (
+      filtro !== "Todos" &&
+      pedido.status !== filtro
+    ) {
+      return;
+    }
+
+    if (
+      filtroData &&
+      dataPedidoFormatada !== filtroData
+    ) {
+      return;
+    }
+
+    lista.innerHTML += criarCardPedido(
+      pedido,
+      pedido.id
+    );
+
+  });
+
+  document.getElementById("totalPedidos").innerText =
+    totalPedidos;
+
+  document.getElementById("totalAprovados").innerText =
+    totalAprovados;
+
+  document.getElementById("totalPendentes").innerText =
+    totalPendentes;
+
+  document.getElementById("faturamentoTotal").innerText =
+    `R$ ${faturamento}`;
+
+  const browniesElement =
+    document.getElementById("browniesVendidos");
+
+  if (browniesElement) {
+
+    browniesElement.innerText =
+      browniesVendidos;
+
+  }
 
 }
+
 
 
 // ======================================================
@@ -242,7 +257,7 @@ function criarCardPedido(pedido, pedidoId) {
 
 <p>
   <strong>Forma de pagamento:</strong>
-  ${pedido.formaPagamento || "Não informado"}
+  ${pedido.metodoPagamento || "Não informado"}
 </p>
 
       <p>
@@ -425,13 +440,16 @@ document.addEventListener("click", async (e) => {
 
 document
   .getElementById("buscarPedido")
-  .addEventListener("input", carregarPedidos);
+  .addEventListener("input", renderizarPedidos);
 
 document
   .getElementById("filtroStatus")
-  .addEventListener("change", carregarPedidos);
+  .addEventListener("change", renderizarPedidos);
 
-  <p>
-  <strong>Valor:</strong>
-  R$ ${(pedido.quantidade || 0) * 10}
-</p>
+  document
+  .getElementById("filtroData")
+ .addEventListener("change", renderizarPedidos);
+
+
+
+
