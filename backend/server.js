@@ -73,10 +73,13 @@ app.post("/pedido", async (req, res) => {
 
     const dados = req.body;
 
+    console.log("FORMA:", dados.formaPagamento);
+    console.log("METODO:", dados.metodoPagamento);
+
     const total =
       dados.quantidade * 10;
 
-      if (dados.formaPagamento === "DINHEIRO") {
+      if (dados.metodoPagamento === "DINHEIRO") {
 
   const pedidoRef =
     await db.collection("pedidos").add({
@@ -173,7 +176,7 @@ Quantidade: ${dados.quantidade}`
 
 🔢 Quantidade: ${dados.quantidade}
 
-💳 Pagamento: ${dados.formaPagamento}
+💳 Pagamento: ${dados.metodoPagamento}
 
 📅 Data: ${dados.data}
 
