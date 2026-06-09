@@ -96,13 +96,26 @@ app.post("/pedido", async (req, res) => {
 
   await enviarTelegram(
 
-`🍪 NOVO PEDIDO (DINHEIRO)
+`🍪 NOVO PEDIDO
 
-Cliente: ${dados.nome}
+👤 Cliente: ${dados.nome}
 
-Produto: ${dados.produto}
+📦 Produto: ${dados.produto}
 
-Quantidade: ${dados.quantidade}`
+🔢 Quantidade: ${dados.quantidade}
+
+💳 Pagamento: ${dados.metodoPagamento}
+
+📅 Data: ${dados.data}
+
+⏰ Horário: ${dados.horario}
+
+📍 Endereço: ${dados.endereco || "Não informado"}
+
+📝 Observação: ${dados.observacao || "Nenhuma"}
+
+🔗 Painel Admin:
+https://aatroxidade.github.io/BrowniesENF/admin.html`
 
   );
 
