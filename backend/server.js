@@ -330,6 +330,74 @@ https://aatroxidade.github.io/BrowniesENF/admin.html`
 
 });
 
+app.post("/gerar-pix", async (req, res) => {
+
+  const {
+
+    pedidoId,
+
+    quantidade,
+
+    produto,
+
+    usuario
+
+  } = req.body;
+
+  const total =
+    quantidade * 10;
+
+  const pagamento =
+    await payment.create({
+
+      body: {
+
+        transaction_amount: total,
+
+        description: produto,
+
+        payment_method_id: "pix",
+
+        payer: {
+
+          email: usuario
+
+        }
+
+      }
+
+    });
+
+  await db
+
+    .collection("pedidos")
+
+    .doc(pedidoId)
+
+    .update({
+
+      pagamento: "Pendente",
+
+      pagamentoId: pagamento.id
+
+    });
+
+  res.json({
+
+    qrCode:
+
+      pagamento.point_of_interaction
+      .transaction_data.qr_code,
+
+    qrCodeBase64:
+
+      pagamento.point_of_interaction
+      .transaction_data.qr_code_base64
+
+  });
+
+});
+
 app.get("/teste-telegram", async (req, res) => {
 
   await enviarTelegram(
@@ -341,6 +409,8 @@ app.get("/teste-telegram", async (req, res) => {
   res.send("Mensagem enviada!");
 
 });
+
+
 
 
 

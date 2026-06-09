@@ -155,7 +155,25 @@ onAuthStateChanged(auth, async (user) => {
     const pedidoSnap =
       await getDoc(pedidoRef);
 
+      const pedidoAtual =
+  pedidoSnap.data();
+
+  if (
+
+  pedidoAtual.pagamento === "Dinheiro" &&
+
+  formaPagamento === "PIX"
+
+) {
+
+  // gerar PIX
+
+}
+
     if (pedidoSnap.exists()) {
+
+      formaPagamentoInput.value =
+  pedido.formaPagamento || "";
 
       const pedido =
         pedidoSnap.data();
@@ -315,26 +333,111 @@ onAuthStateChanged(auth, async (user) => {
       // EDITAR
       // ======================================================
 
-      if (pedidoId) {
+     if (pedidoId) {
 
-        await updateDoc(
+  const pedidoRef =
+    doc(db, "pedidos", pedidoId);
 
-          doc(db, "pedidos", pedidoId),
+  const pedidoSnap =
+    await getDoc(pedidoRef);
 
-          {
+  const pedidoAntigo =
+    pedidoSnap.data();
 
-            nome,
-            quantidade,
-            data,
-            horario,
-            endereco,
-            observacao
+  await updateDoc(
 
-          }
+    pedidoRef,
 
-        );
+    {
+
+      nome,
+      quantidade,
+      data,
+      horario,
+      endereco,
+      observacao,
+      metodoPagamento: formaPagamento
+
+    }
+
+  );
+
+  if (
+
+    pedidoAntigo.pagamento === "Dinheiro" &&
+
+    formaPagamento === "PIX"
+
+  ) {
+
+    const respostaPix = await fetch(
+
+      "https://browniesenf.onrender.com/gerar-pix",
+
+      {
+
+        method: "POST",
+
+        headers: {
+
+          "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+          pedidoId,
+
+          quantidade,
+
+          produto: "Brownie de Oreo",
+
+          usuario: user.email
+
+        })
 
       }
+
+    );
+
+    const dadosPix =
+      await respostaPix.json();
+
+    const qrCodePix =
+      document.getElementById("qrCodePix");
+
+    qrCodePix.src =
+      `data:image/png;base64,${dadosPix.qrCodeBase64}`;
+
+    document.getElementById("chavePix").value =
+      dadosPix.qrCode;
+
+    document
+      .getElementById("modalPix")
+      .classList.remove("d-none");
+
+    return;
+
+  }
+
+  Swal.fire({
+
+    icon: "success",
+
+    title: "Pedido atualizado!",
+
+    confirmButtonColor: "#d48a27"
+
+  });
+
+  setTimeout(() => {
+
+    window.location.href =
+      "pedidos.html";
+
+  }, 1500);
+
+}
 
 
       // ======================================================
