@@ -257,7 +257,7 @@ function criarCardPedido(pedido, pedidoId) {
 
 <p>
   <strong>Forma de pagamento:</strong>
-  ${pedido.metodoPagamento || "Não informado"}
+  ${pedido.formaPagamento || "Não informado"}
 </p>
 
       <p>

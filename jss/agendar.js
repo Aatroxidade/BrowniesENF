@@ -48,8 +48,16 @@ const quantidadeInput =
 const dataInput =
   document.getElementById("data");
 
+  dataInput.addEventListener("click", () => {
+  dataInput.showPicker();
+});
+
 const horarioInput =
   document.getElementById("horario");
+
+  horarioInput.addEventListener("click", () => {
+  horarioInput.showPicker();
+});
 
 const enderecoInput =
   document.getElementById("endereco");
@@ -616,106 +624,20 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 
-// ======================================================
-// FORMATAR HORÁRIO
-// ======================================================
-
-if (horarioInput) {
-
-  horarioInput.addEventListener("input", () => {
-
-    let valor =
-      horarioInput.value.replace(/\D/g, "");
-
-    if (valor.length >= 3) {
-
-      valor =
-
-        valor.slice(0, 2) +
-
-        ":" +
-
-        valor.slice(2, 4);
-
-    }
-
-    horarioInput.value = valor;
-
-  });
-
-}
 
 
 // ======================================================
 // FORMATAR DATA
 // ======================================================
 
-if (dataInput) {
+  if (dataInput) {
 
-  dataInput.addEventListener("input", () => {
+  const hoje =
+    new Date()
+      .toISOString()
+      .split("T")[0];
 
-    let valor =
-      dataInput.value.replace(/\D/g, "");
-
-    if (valor.length >= 2) {
-
-      let dia =
-        parseInt(valor.slice(0, 2));
-
-      if (dia > 31) dia = 31;
-
-      valor =
-
-        dia.toString().padStart(2, "0") +
-
-        valor.slice(2);
-
-    }
-
-    if (valor.length >= 4) {
-
-      let mes =
-        parseInt(valor.slice(2, 4));
-
-      if (mes > 12) mes = 12;
-
-      valor =
-
-        valor.slice(0, 2) +
-
-        mes.toString().padStart(2, "0") +
-
-        valor.slice(4);
-
-    }
-
-    if (valor.length > 2) {
-
-      valor =
-
-        valor.slice(0, 2) +
-
-        "/" +
-
-        valor.slice(2);
-
-    }
-
-    if (valor.length > 5) {
-
-      valor =
-
-        valor.slice(0, 5) +
-
-        "/" +
-
-        valor.slice(5, 9);
-
-    }
-
-    dataInput.value = valor;
-
-  });
+  dataInput.min = hoje;
 
 }
 
