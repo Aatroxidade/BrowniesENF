@@ -74,12 +74,16 @@ app.post("/pedido", async (req, res) => {
     const dados = req.body;
 
     console.log("FORMA:", dados.formaPagamento);
-    console.log("METODO:", dados.metodoPagamento);
+    console.log("METODO:", dados.formaPagamento);
 
     const total =
       dados.quantidade * 10;
 
-      if (dados.metodoPagamento === "DINHEIRO") {
+      console.log("FORMA PAGAMENTO:", dados.formaPagamento);
+
+      if (dados.formaPagamento === "DINHEIRO") {
+
+        console.log("ENTROU NO IF DINHEIRO");
 
   const pedidoRef =
     await db.collection("pedidos").add({
@@ -104,7 +108,7 @@ app.post("/pedido", async (req, res) => {
 
 🔢 Quantidade: ${dados.quantidade}
 
-💰 Pagamento: ${dados.metodoPagamento}
+💰 Pagamento: ${dados.formaPagamento}
 
 📅 Data: ${dados.data}
 
@@ -189,7 +193,7 @@ https://aatroxidade.github.io/BrowniesENF/admin.html`
 
 🔢 Quantidade: ${dados.quantidade}
 
-💳 Pagamento: ${dados.metodoPagamento}
+💳 Pagamento: ${dados.formaPagamento}
 
 📅 Data: ${dados.data}
 
