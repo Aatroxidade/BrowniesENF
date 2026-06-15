@@ -180,11 +180,11 @@ onAuthStateChanged(auth, async (user) => {
 
     if (pedidoSnap.exists()) {
 
+       const pedido =
+        pedidoSnap.data();
+
       formaPagamentoInput.value =
         pedido.formaPagamento || "";
-
-      const pedido =
-        pedidoSnap.data();
 
       nomeInput.value =
         pedido.nome;

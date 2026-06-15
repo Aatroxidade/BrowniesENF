@@ -98,9 +98,7 @@ function carregarPedidos() {
 
 function renderizarPedidos() {
 
-  const lista =
-    document.getElementById("listaAdmin");
-
+  const lista = document.getElementById("listaAdmin");
   lista.innerHTML = "";
 
   let totalPedidos = 0;
@@ -109,113 +107,87 @@ function renderizarPedidos() {
   let faturamento = 0;
   let browniesVendidos = 0;
 
-  const busca =
-    document.getElementById("buscarPedido")
-    ?.value?.toLowerCase() || "";
+  const busca = document.getElementById("buscarPedido")?.value?.toLowerCase() || "";
+  const filtro = document.getElementById("filtroStatus")?.value || "Todos";
+  const periodo = document.querySelector(".btn_periodo.ativo")?.dataset?.periodo || "todos";
 
-  const filtro =
-    document.getElementById("filtroStatus")
-    ?.value || "Todos";
-
-  const filtroData =
-    document.getElementById("filtroData")
-    ?.value || "";
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
 
   todosPedidos.forEach((pedido) => {
 
     totalPedidos++;
 
-    let dataPedidoFormatada = "";
-
+    // Converter data do pedido (dd/mm/aaaa) para objeto Date
+    let dataPedido = null;
     if (pedido.data) {
-
-      const partes =
-        pedido.data.split("/");
-
-      dataPedidoFormatada =
-        `${partes[2]}-${partes[1]}-${partes[0]}`;
-
+      const partes = pedido.data.split("/");
+      if (partes.length === 3) {
+        dataPedido = new Date(`${partes[2]}-${partes[1]}-${partes[0]}`);
+        dataPedido.setHours(0, 0, 0, 0);
+      }
     }
 
     if (pedido.status === "Aprovado") {
-
       totalAprovados++;
+      faturamento += (pedido.quantidade || 0) * 10;
+      browniesVendidos += pedido.quantidade || 0;
+    }
 
-      if (
-        !filtroData ||
-        dataPedidoFormatada === filtroData
-      ) {
+    if (!pedido.status || pedido.status === "Pendente") {
+      totalPendentes++;
+    }
 
-        faturamento +=
-          (pedido.quantidade || 0) * 10;
+    // Filtro por nome
+    if (busca && !pedido.nome?.toLowerCase().includes(busca)) return;
 
-        browniesVendidos +=
-          pedido.quantidade || 0;
+    // Filtro por status
+    if (filtro !== "Todos" && pedido.status !== filtro) return;
 
+    // Filtro por período
+    if (periodo !== "todos" && dataPedido) {
+
+      if (periodo === "hoje") {
+        if (dataPedido.getTime() !== hoje.getTime()) return;
+      }
+
+      if (periodo === "semana") {
+        const inicioSemana = new Date(hoje);
+        inicioSemana.setDate(hoje.getDate() - hoje.getDay());
+        if (dataPedido < inicioSemana) return;
+      }
+
+      if (periodo === "mes") {
+        if (
+          dataPedido.getMonth() !== hoje.getMonth() ||
+          dataPedido.getFullYear() !== hoje.getFullYear()
+        ) return;
       }
 
     }
 
-    if (
-      !pedido.status ||
-      pedido.status === "Pendente"
-    ) {
-
-      totalPendentes++;
-
-    }
-
-    if (
-      busca &&
-      !pedido.nome?.toLowerCase().includes(busca)
-    ) {
-      return;
-    }
-
-    if (
-      filtro !== "Todos" &&
-      pedido.status !== filtro
-    ) {
-      return;
-    }
-
-    if (
-      filtroData &&
-      dataPedidoFormatada !== filtroData
-    ) {
-      return;
-    }
-
-    lista.innerHTML += criarCardPedido(
-      pedido,
-      pedido.id
-    );
+    lista.innerHTML += criarCardPedido(pedido, pedido.id);
 
   });
 
-  document.getElementById("totalPedidos").innerText =
-    totalPedidos;
+  document.getElementById("totalPedidos").innerText = totalPedidos;
+  document.getElementById("totalAprovados").innerText = totalAprovados;
+  document.getElementById("totalPendentes").innerText = totalPendentes;
+  document.getElementById("faturamentoTotal").innerText = `R$ ${faturamento}`;
 
-  document.getElementById("totalAprovados").innerText =
-    totalAprovados;
-
-  document.getElementById("totalPendentes").innerText =
-    totalPendentes;
-
-  document.getElementById("faturamentoTotal").innerText =
-    `R$ ${faturamento}`;
-
-  const browniesElement =
-    document.getElementById("browniesVendidos");
-
+  const browniesElement = document.getElementById("browniesVendidos");
   if (browniesElement) {
-
-    browniesElement.innerText =
-      browniesVendidos;
-
+    browniesElement.innerText = browniesVendidos;
   }
 
 }
+
+
+    
+
+  
+
+
 
 
 
@@ -225,123 +197,122 @@ function renderizarPedidos() {
 
 function criarCardPedido(pedido, pedidoId) {
 
+  const statusClass =
+    pedido.status === "Aprovado" ? "status_aprovado" :
+    pedido.status === "Cancelado" ? "status_cancelado" :
+    "status_pendente";
+
+  const statusTexto = pedido.status || "Pendente";
+
+  const valor = (pedido.quantidade || 0) * 10;
+
   return `
 
     <div class="card_admin">
 
-      <h3>
-         ${pedido.produto}
-      </h3>
+      <!-- CABEÇALHO -->
+      <div class="card_admin_header">
+
+        <h3>${pedido.produto}</h3>
+
+        <span class="${statusClass}">${statusTexto}</span>
+
+      </div>
 
       <hr>
 
-      <p>
-        <strong>Cliente:</strong>
-        ${pedido.nome}
-      </p>
+      <!-- INFOS PRINCIPAIS -->
+      <div class="card_admin_grid">
 
-      <p>
-        <strong>Email:</strong>
-        ${pedido.usuario}
-      </p>
+        <div class="card_info">
+          <span class="card_label">👤 Cliente</span>
+          <span class="card_valor">${pedido.nome}</span>
+        </div>
 
-      <p>
-        <strong>Quantidade:</strong>
-        ${pedido.quantidade}
-      </p>
+        <div class="card_info">
+          <span class="card_label">💰 Valor</span>
+          <span class="card_valor card_destaque">R$ ${valor},00</span>
+        </div>
 
-      <p>
-  <strong>Valor:</strong>
-  R$ ${(pedido.quantidade || 0) * 10}
-</p>
+        <div class="card_info">
+          <span class="card_label">🍫 Quantidade</span>
+          <span class="card_valor">${pedido.quantidade} un.</span>
+        </div>
 
-<p>
-  <strong>Forma de pagamento:</strong>
-  ${pedido.formaPagamento || "Não informado"}
-</p>
+        <div class="card_info">
+          <span class="card_label">📅 Data</span>
+          <span class="card_valor">${pedido.data} às ${pedido.horario}</span>
+        </div>
 
-      <p>
-        <strong>Data:</strong>
-        ${pedido.data}
-      </p>
+      </div>
 
-      <p>
-        <strong>Horário:</strong>
-        ${pedido.horario}
-      </p>
+      <!-- DETALHES (recolhido por padrão) -->
+      <div class="card_detalhes" id="detalhes_${pedidoId}" style="display:none">
 
-      <p>
-        <strong>Endereço:</strong>
-        ${pedido.endereco || "Não informado"}
-      </p>
+        <hr>
 
-      <p>
-        <strong>Observações:</strong>
-        ${pedido.observacao || "Nenhuma"}
-      </p>
+        <div class="card_info">
+          <span class="card_label">📧 Email</span>
+          <span class="card_valor">${pedido.usuario}</span>
+        </div>
 
-      <p>
+        <div class="card_info" style="margin-top:8px">
+          <span class="card_label">📍 Endereço</span>
+          <span class="card_valor">${pedido.endereco || "Não informado"}</span>
+        </div>
 
- 
+        <div class="card_info" style="margin-top:8px">
+          <span class="card_label">💳 Pagamento</span>
+          <span class="card_valor">${pedido.formaPagamento || "Não informado"}</span>
+        </div>
 
-      <p>
+        <div class="card_info" style="margin-top:8px">
+          <span class="card_label">📝 Observações</span>
+          <span class="card_valor">${pedido.observacao || "Nenhuma"}</span>
+        </div>
 
-        <strong>Status:</strong>
+      </div>
 
-        <span class="
-          ${pedido.status === "Aprovado" ? "status_aprovado" : ""}
-          ${pedido.status === "Cancelado" ? "status_cancelado" : ""}
-          ${!pedido.status || pedido.status === "Pendente" ? "status_pendente" : ""}
-        ">
+      <!-- BOTÃO VER MAIS -->
+      <button
+        class="btn_ver_mais"
+        onclick="toggleDetalhes('${pedidoId}')"
+        id="btnver_${pedidoId}"
+      >
+        Ver detalhes ▾
+      </button>
 
-          ${pedido.status || "Pendente"}
+      <hr>
 
-        </span>
-
-      </p>
-
-      <p>
-
-  <strong>Pagamento:</strong>
-
-  <span class="
-    ${pedido.pagamento === "Pagamento via PIX" ? "status_aprovado" : ""}
-  ">
-
-    ${pedido.pagamento || "Pendente"}
-
-  </span>
-
-</p>
-
-      <div class="d-flex gap-2 mt-3 flex-wrap">
+      <!-- AÇÕES -->
+      <div class="card_admin_acoes">
 
         <button
-          class="btn btn-success btn-sm"
+          class="btn_acao btn_aprovar"
           onclick="alterarStatus('${pedidoId}', 'Aprovado')"
         >
-          Aprovar
+          ✓ Aprovar
         </button>
 
         <button
-          class="btn btn-warning btn-sm"
+          class="btn_acao btn_pendente"
           onclick="alterarStatus('${pedidoId}', 'Pendente')"
         >
-          Pendente
+          ⏳ Pendente
         </button>
 
         <button
-          class="btn btn-danger btn-sm"
+          class="btn_acao btn_cancelar"
           onclick="alterarStatus('${pedidoId}', 'Cancelado')"
         >
-          Cancelar
+          ✕ Cancelar
         </button>
 
         <button
-          class="btn btn-dark btn-sm"
+          class="btn_acao btn_excluir"
           onclick="excluirPedido('${pedidoId}')"
         >
-          Excluir
+          🗑
         </button>
 
       </div>
@@ -351,6 +322,26 @@ function criarCardPedido(pedido, pedidoId) {
   `;
 
 }
+
+
+// ======================================================
+// VER MAIS / RECOLHER
+// ======================================================
+
+window.toggleDetalhes = (pedidoId) => {
+
+  const detalhes = document.getElementById(`detalhes_${pedidoId}`);
+  const btn = document.getElementById(`btnver_${pedidoId}`);
+
+  if (detalhes.style.display === "none") {
+    detalhes.style.display = "block";
+    btn.textContent = "Recolher ▴";
+  } else {
+    detalhes.style.display = "none";
+    btn.textContent = "Ver detalhes ▾";
+  }
+
+};
 
 
 // ======================================================
@@ -446,10 +437,11 @@ document
   .getElementById("filtroStatus")
   .addEventListener("change", renderizarPedidos);
 
-  document
-  .getElementById("filtroData")
- .addEventListener("change", renderizarPedidos);
-
-
-
-
+// Botões de período
+document.querySelectorAll(".btn_periodo").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".btn_periodo").forEach(b => b.classList.remove("ativo"));
+    btn.classList.add("ativo");
+    renderizarPedidos();
+  });
+});
