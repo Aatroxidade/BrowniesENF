@@ -166,34 +166,27 @@ onAuthStateChanged(auth, async (user) => {
     const pedidoAtual =
       pedidoSnap.data();
 
-    if (
-
-      pedidoAtual.pagamento === "Dinheiro" &&
-
-      formaPagamento === "PIX"
-
-    ) {
-
-      // gerar PIX
-
-    }
-
     if (pedidoSnap.exists()) {
 
-       const pedido =
+      const pedido =
         pedidoSnap.data();
-
-      formaPagamentoInput.value =
-        pedido.formaPagamento || "";
 
       nomeInput.value =
         pedido.nome;
 
+      formaPagamentoInput.value =
+        pedido.formaPagamento || "";
+
       quantidadeInput.value =
         pedido.quantidade;
 
-      dataInput.value =
-        pedido.data;
+      // Converte dd/mm/aaaa → aaaa-mm-dd pro input de data
+      if (pedido.data && pedido.data.includes("/")) {
+        const [d, m, a] = pedido.data.split("/");
+        dataInput.value = `${a}-${m}-${d}`;
+      } else {
+        dataInput.value = pedido.data;
+      }
 
       horarioInput.value =
         pedido.horario;
@@ -223,8 +216,9 @@ onAuthStateChanged(auth, async (user) => {
     let quantidade =
       Number(quantidadeInput.value);
 
-    const data =
-      dataInput.value;
+    const dataRaw = dataInput.value; // formato: 2026-06-12
+    const [ano, mes, dia] = dataRaw.split("-");
+    const data = `${dia}/${mes}/${ano}`; // formato: 12/06/2026
 
     const horario =
       horarioInput.value;
@@ -370,13 +364,12 @@ onAuthStateChanged(auth, async (user) => {
 
         );
 
-        if (
+            // Mostra QR Code se: pagamento é PIX e pedido ainda não foi aprovado
+        const precisaPagar =
+          formaPagamento === "PIX" &&
+          pedidoAntigo.status !== "Aprovado";
 
-          pedidoAntigo.pagamento === "Dinheiro" &&
-
-          formaPagamento === "PIX"
-
-        ) {
+        if (precisaPagar) {
 
           const respostaPix = await fetch(
 
@@ -393,24 +386,16 @@ onAuthStateChanged(auth, async (user) => {
               },
 
               body: JSON.stringify({
+                pedidoId,
                 usuario: user.email,
-
                 produto: "Brownie de Oreo",
-
                 nome,
-
                 quantidade,
-
                 data,
-
                 horario,
-
                 endereco,
-
                 observacao,
-
                 formaPagamento
-
               })
 
             }

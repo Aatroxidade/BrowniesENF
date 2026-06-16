@@ -352,69 +352,60 @@ https://aatroxidade.github.io/BrowniesENF/admin.html`
 
 app.post("/gerar-pix", async (req, res) => {
 
-  const {
+  try {
 
-    pedidoId,
+    const { pedidoId, quantidade, produto, usuario } = req.body;
 
-    quantidade,
+    console.log("GERAR PIX - pedidoId:", pedidoId);
+    console.log("GERAR PIX - quantidade:", quantidade);
+    console.log("GERAR PIX - usuario:", usuario);
 
-    produto,
+    if (!pedidoId) {
+      return res.status(400).json({ sucesso: false, erro: "pedidoId é obrigatório" });
+    }
 
-    usuario
+    if (!quantidade || !usuario) {
+      return res.status(400).json({ sucesso: false, erro: "quantidade e usuario são obrigatórios" });
+    }
 
-  } = req.body;
+    const total = quantidade * 10;
 
-  const total =
-    quantidade * 10;
-
-  const pagamento =
-    await payment.create({
-
+    const pagamento = await payment.create({
       body: {
-
         transaction_amount: total,
-
-        description: produto,
-
+        description: produto || "Brownie",
         payment_method_id: "pix",
-
+        notification_url: "https://browniesenf.onrender.com/webhook",
         payer: {
-
           email: usuario
-
         }
-
       }
-
     });
 
-  await db
+    await db
+      .collection("pedidos")
+      .doc(pedidoId)
+      .update({
+        pagamento: "Pendente",
+        pagamentoId: pagamento.id
+      });
 
-    .collection("pedidos")
-
-    .doc(pedidoId)
-
-    .update({
-
-      pagamento: "Pendente",
-
-      pagamentoId: pagamento.id
-
+    res.json({
+      sucesso: true,
+      qrCode: pagamento.point_of_interaction.transaction_data.qr_code,
+      qrCodeBase64: pagamento.point_of_interaction.transaction_data.qr_code_base64
     });
 
-  res.json({
+  } catch (erro) {
 
-    qrCode:
+    console.error("ERRO GERAR PIX:", erro);
 
-      pagamento.point_of_interaction
-      .transaction_data.qr_code,
+    res.status(500).json({
+      sucesso: false,
+      erro: erro.message
+    });
 
-    qrCodeBase64:
-
-      pagamento.point_of_interaction
-      .transaction_data.qr_code_base64
-
-  });
+  }
 
 });
 
