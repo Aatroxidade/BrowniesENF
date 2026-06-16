@@ -153,17 +153,13 @@ const mostrarSenha = document.getElementById("mostrarSenha");
 mostrarSenha.addEventListener("click", () => {
 
   if (inputSenha.type === "password") {
-
     inputSenha.type = "text";
-
-    mostrarSenha.innerText = "🙈";
-
+    mostrarSenha.classList.remove("bi-eye", "bi-eye-fill");
+    mostrarSenha.classList.add("bi-eye-slash");
   } else {
-
     inputSenha.type = "password";
-
-    mostrarSenha.innerText = "👁";
-
+    mostrarSenha.classList.remove("bi-eye-slash");
+    mostrarSenha.classList.add("bi-eye-fill");
   }
 
 });

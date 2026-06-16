@@ -73,17 +73,13 @@ const btnMostrar = document.getElementById("mostrarSenha");
 btnMostrar.addEventListener("click", () => {
 
   if (inputSenha.type === "password") {
-
     inputSenha.type = "text";
-
-    btnMostrar.innerText = "🙈";
-
+    btnMostrar.classList.remove("bi-eye", "bi-eye-fill");
+    btnMostrar.classList.add("bi-eye-slash");
   } else {
-
     inputSenha.type = "password";
-
-    btnMostrar.innerText = "👁";
-
+    btnMostrar.classList.remove("bi-eye-slash");
+    btnMostrar.classList.add("bi-eye-fill");
   }
 
 });
