@@ -26,8 +26,6 @@ express();
 console.log("Iniciando servidor...");
 
 
-const db = require("./firebase");
-
 const express = require("express");
 const cors = require("cors");
 const mercadopago = require("mercadopago");
