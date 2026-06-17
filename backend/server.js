@@ -26,10 +26,7 @@ express();
 console.log("Iniciando servidor...");
 
 
-const cors = require("cors");
-const mercadopago = require("mercadopago");
 
-const { MercadoPagoConfig, Payment } = require("mercadopago");
 
 
 const TOKEN = process.env.TELEGRAM_TOKEN;
