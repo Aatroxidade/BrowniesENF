@@ -18,19 +18,16 @@
 
 .titulo{
     text-align: center;
-
     margin-top: 30px;
-
-    font-size: 3rem;
-
-    font-weight: bold;
-
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    font-weight: 900;
     color: #ffffff;
-
+    letter-spacing: 1px;
     text-shadow:
         0 0 5px #000000,
-        0 0 10px #000000,
-        0 0 20px #000000;
+        0 0 15px #000000,
+        0 0 30px rgba(255,204,112,0.2);
 }
 
 .sejabemvindo{
@@ -136,4 +133,69 @@
 
     text-shadow:
       0 0 12px rgba(255,204,112,0.25);
+}
+
+/* ======================================================
+   GALERIA / CARROSSEL
+====================================================== */
+
+.galeria_section{
+    max-width: 500px;
+    margin: 60px auto 60px;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.galeria_titulo{
+    color: #ffcc70;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    text-shadow: 0 0 12px rgba(255,204,112,0.25);
+}
+
+.galeria_subtitulo{
+    color: rgba(255,255,255,0.55);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+}
+
+.galeria_carrossel{
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.galeria_inner{
+    border-radius: 20px;
+}
+
+.galeria_img{
+    width: 100%;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+.galeria_legenda p{
+    background: rgba(0,0,0,0.5);
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    backdrop-filter: blur(6px);
+}
+
+/* Pontinhos indicadores */
+.carousel-indicators [data-bs-target]{
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255,204,112,0.5);
+    border: none;
+}
+
+.carousel-indicators .active{
+    background-color: #ffcc70;
 }

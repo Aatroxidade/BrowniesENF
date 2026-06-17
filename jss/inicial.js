@@ -77,4 +77,23 @@ if (docSnap.exists()) {
 
 });
 
+const btnNotif =
+document.getElementById("ativarNotif");
+
+btnNotif.addEventListener("click", async () => {
+
+const permissao =
+await Notification.requestPermission();
+
+if (permissao === "granted") {
+
+alert("Notificações ativadas!");
+
+} else {
+
+alert("Você negou as notificações.");
+
+}
+
+});
 

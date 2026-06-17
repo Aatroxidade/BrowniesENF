@@ -24,3 +24,17 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export { app, db };
+
+import {
+getMessaging
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
+
+const messaging =
+getMessaging(app);
+
+export {
+app,
+db,
+messaging
+};
