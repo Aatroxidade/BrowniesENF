@@ -11,8 +11,6 @@ console.log(
 "🍪 Rodando notificações"
 );
 
-// envio real depois
-
 }
 
 );

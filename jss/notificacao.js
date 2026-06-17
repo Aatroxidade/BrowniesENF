@@ -9,7 +9,7 @@ from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
 const messaging =
 getMessaging(app);
 
-async function ativarNotif() {
+async function ativarNotificacao() {
 
 try {
 
@@ -55,7 +55,7 @@ console.log(err);
 
 document
 .getElementById(
-"ativarNotif"
+"ativarNotificacao"
 )
 ?.addEventListener(
 "click",

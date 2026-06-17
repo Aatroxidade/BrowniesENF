@@ -78,7 +78,7 @@ if (docSnap.exists()) {
 });
 
 const btnNotif =
-document.getElementById("ativarNotif");
+document.getElementById("ativarNotificacao");
 
 btnNotif.addEventListener("click", async () => {
 
@@ -96,4 +96,27 @@ alert("Você negou as notificações.");
 }
 
 });
+
+import "./notificacao.js";
+
+setTimeout(async () => {
+
+if (
+Notification.permission === "default"
+) {
+
+const ativar =
+confirm(
+"Deseja receber notificações quando houver brownies disponíveis?"
+);
+
+if (ativar) {
+
+window.ativarNotificacaoicacao();
+
+}
+
+}
+
+}, 1500);
 
