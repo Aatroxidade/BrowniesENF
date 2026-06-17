@@ -110,12 +110,6 @@ confirm(
 "Deseja receber notificações quando houver brownies disponíveis?"
 );
 
-if (ativar) {
-
-window.ativarNotificacao();
-
-}
-
 }
 
 }, 1500);
