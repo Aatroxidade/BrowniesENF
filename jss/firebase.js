@@ -1,32 +1,42 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import { getMessaging }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyAUnUndHUcUsEeKT4ScS7vcroyFHJSBzFI",
+apiKey:
+"AIzaSyAUnUndHUcUsEeKT4ScS7vcroyFHJSBzFI",
 
-  authDomain: "cookies-site.firebaseapp.com",
+authDomain:
+"cookies-site.firebaseapp.com",
 
-  projectId: "cookies-site",
+projectId:
+"cookies-site",
 
-  storageBucket: "cookies-site.firebasestorage.app",
+storageBucket:
+"cookies-site.firebasestorage.app",
 
-  messagingSenderId: "736821689099",
+messagingSenderId:
+"736821689099",
 
-  appId: "1:736821689099:web:2ea4cbe4287139b4f9400e",
+appId:
+"1:736821689099:web:2ea4cbe4287139b4f9400e",
 
-  measurementId: "G-7EC2BG8QRR"
+measurementId:
+"G-7EC2BG8QRR"
+
 };
 
-const app = initializeApp(firebaseConfig);
+const app =
+initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
-
-import {
-getMessaging
-}
-from "https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging.js";
+const db =
+getFirestore(app);
 
 const messaging =
 getMessaging(app);
