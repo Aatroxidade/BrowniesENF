@@ -33,7 +33,7 @@ await getToken(
 messaging,
 {
 vapidKey:
-"SUA_VAPID_KEY"
+"BPXMZabBY88GvdNP-GmBB74bkuc90Qg_7Gzs0UwZ-n2IXseWImNq6F5QTBICyd8utmr96Ww_OQM92deO_Qr14NI"
 }
 );
 
