@@ -112,7 +112,7 @@ confirm(
 
 if (ativar) {
 
-window.ativarNotificacaoicacao();
+window.ativarNotificacao();
 
 }
 
