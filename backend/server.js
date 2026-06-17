@@ -1,6 +1,6 @@
 import express from "express";
 
-import "./notificacoes.js";
+require("./notificacoes");
 
 const app =
 express();
