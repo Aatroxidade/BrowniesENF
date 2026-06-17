@@ -26,13 +26,11 @@ express();
 console.log("Iniciando servidor...");
 
 
-const express = require("express");
 const cors = require("cors");
 const mercadopago = require("mercadopago");
 
 const { MercadoPagoConfig, Payment } = require("mercadopago");
 
-const app = express();
 
 const TOKEN = process.env.TELEGRAM_TOKEN;
 
@@ -53,8 +51,7 @@ async function enviarTelegram(mensagem) {
   );
 
 }
-app.use(cors());
-app.use(express.json());
+
 
 
 // ======================================================
