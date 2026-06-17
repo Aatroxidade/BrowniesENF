@@ -1,9 +1,27 @@
-import express from "express";
-
 require("./notificacoes");
+
+const db =
+require("./firebase");
+
+const express =
+require("express");
+
+const cors =
+require("cors");
+
+const mercadopago =
+require("mercadopago");
+
+const {
+MercadoPagoConfig,
+Payment
+}
+=
+require("mercadopago");
 
 const app =
 express();
+
 
 console.log("Iniciando servidor...");
 
@@ -428,20 +446,7 @@ app.get("/teste-telegram", async (req, res) => {
 
 });
 
-import cron from "node-cron";
 
-cron.schedule(
-"0 10 * * 1",
-
-async ()=>{
-
-await enviarPush(
-"Hoje tem brownie!"
-);
-
-}
-
-);
 
 
 
