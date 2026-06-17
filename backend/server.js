@@ -1,3 +1,10 @@
+import express from "express";
+
+import "./notificacoes.js";
+
+const app =
+express();
+
 console.log("Iniciando servidor...");
 
 
@@ -420,6 +427,21 @@ app.get("/teste-telegram", async (req, res) => {
   res.send("Mensagem enviada!");
 
 });
+
+import cron from "node-cron";
+
+cron.schedule(
+"0 10 * * 1",
+
+async ()=>{
+
+await enviarPush(
+"Hoje tem brownie!"
+);
+
+}
+
+);
 
 
 
