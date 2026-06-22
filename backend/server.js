@@ -462,6 +462,79 @@ app.get("/teste-telegram", async (req, res) => {
 
 });
 
+const admin =
+require("firebase-admin");
+
+app.get(
+"/teste-push",
+
+async (
+req,
+res
+)=>{
+
+try{
+
+const snapshot =
+await db
+.collection(
+"notificacoes"
+)
+.get();
+
+const tokens =
+snapshot.docs.map(
+doc=>
+doc.data().token
+);
+
+if(
+tokens.length===0
+){
+
+return res.send(
+"Nenhum inscrito"
+);
+
+}
+
+await admin
+.messaging()
+.sendEachForMulticast({
+
+tokens,
+
+notification:{
+
+title:
+"🍪 Brownies ENF",
+
+body:
+"Teste de notificação funcionando!"
+
+}
+
+});
+
+res.send(
+"Push enviada!"
+);
+
+}
+
+catch(err){
+
+console.log(err);
+
+res.status(500)
+.send(
+"Erro"
+);
+
+}
+
+});
+
 
 
 
