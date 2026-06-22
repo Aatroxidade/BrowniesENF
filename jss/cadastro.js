@@ -17,6 +17,17 @@ import {
 
 const auth = getAuth(app);
 
+function showToast(msg, tipo = "erro") {
+  const toast = document.getElementById("toast");
+  toast.innerText = msg;
+  toast.classList.remove("visivel", "toast-sucesso");
+  if (tipo === "sucesso") toast.classList.add("toast-sucesso");
+  void toast.offsetWidth;
+  toast.classList.add("visivel");
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => toast.classList.remove("visivel"), 4000);
+}
+
 
 // CRIAR CONTA
 document.getElementById("btnCadastrar").addEventListener("click", async () => {
@@ -27,20 +38,10 @@ document.getElementById("btnCadastrar").addEventListener("click", async () => {
 
   const senha = document.getElementById("senhaCadastro").value;
 
-  const erro = document.getElementById("erroCadastro");
-
-
-  // LIMPAR ERRO
-  erro.innerText = "";
-
-
   // CAMPOS OBRIGATÓRIOS
   if (!nome || !email || !senha) {
-    erro.style.color = "red";
 
-    erro.innerText = "Preencha todos os campos.";
-
-    erro.classList.add("erro-animacao");
+    showToast("Preencha todos os campos.");
 
     return;
 
@@ -52,9 +53,7 @@ document.getElementById("btnCadastrar").addEventListener("click", async () => {
 
   if (!regexNome.test(nome)) {
 
-    erro.innerText = "Digite apenas letras no nome.";
-
-    erro.classList.add("erro-animacao");
+    showToast("Digite apenas letras no nome.");
 
     return;
 
@@ -63,58 +62,34 @@ document.getElementById("btnCadastrar").addEventListener("click", async () => {
 
   try {
 
-    const userCredential = await createUserWithEmailAndPassword(
-  auth,
-  email,
-  senha
-);
+    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
 
-const user = userCredential.user;
+    const user = userCredential.user;
 
-await setDoc(doc(db, "usuarios", user.uid), {
+    await setDoc(doc(db, "usuarios", user.uid), {
+      nome: nome,
+      email: email
+    });
 
-nome: nome,
-
-email: email
-
-  });
-
-    erro.style.color = "#7dff7d";
-
-    erro.innerText = "Conta criada com sucesso!";
-
-
-    // ENTRAR DIRETO
     window.location.href = "inicial.html";
 
   } catch (e) {
 
-    erro.style.color = "red";
-
-
     if (e.code === "auth/email-already-in-use") {
 
-      erro.innerText = "Esse email já está cadastrado.";
-
-      erro.classList.add("erro-animacao");
+      showToast("Esse email já está cadastrado.");
 
     } else if (e.code === "auth/invalid-email") {
 
-      erro.innerText = "Digite um email válido.";
-
-      erro.classList.add("erro-animacao");
+      showToast("Digite um email válido.");
 
     } else if (e.code === "auth/weak-password") {
 
-      erro.innerText = "A senha deve ter no mínimo 6 caracteres.";
-
-      erro.classList.add("erro-animacao");
+      showToast("A senha deve ter no mínimo 6 caracteres.");
 
     } else {
 
-      erro.innerText = "Erro ao criar conta.";
-
-      erro.classList.add("erro-animacao");
+      showToast("Erro ao criar conta.");
 
     }
 

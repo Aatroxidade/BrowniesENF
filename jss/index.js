@@ -2,10 +2,22 @@ import { app } from "./firebase.js";
 
 import {
   getAuth,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const auth = getAuth(app);
+
+function showToast(msg, tipo = "erro") {
+  const toast = document.getElementById("toast");
+  toast.innerText = msg;
+  toast.classList.remove("visivel", "toast-sucesso");
+  if (tipo === "sucesso") toast.classList.add("toast-sucesso");
+  void toast.offsetWidth;
+  toast.classList.add("visivel");
+  clearTimeout(toast._timer);
+  toast._timer = setTimeout(() => toast.classList.remove("visivel"), 4000);
+}
 
 // LOGIN
 document.getElementById("btnLogin").addEventListener("click", async () => {
@@ -13,8 +25,6 @@ document.getElementById("btnLogin").addEventListener("click", async () => {
   const email = document.getElementById("nomeUsuario").value.trim();
 
   const senha = document.getElementById("senhaLogin").value;
-
-  const erro = document.getElementById("erroLogin");
 
   try {
 
@@ -29,15 +39,54 @@ document.getElementById("btnLogin").addEventListener("click", async () => {
 
     if (e.code === "auth/invalid-email") {
 
-      erro.innerText = "Digite um email válido.";
+      showToast("Digite um email válido.");
 
     } else if (e.code === "auth/invalid-credential") {
 
-      erro.innerText = "Email ou senha incorretos.";
+      showToast("Email ou senha incorretos.");
 
     } else {
 
-      erro.innerText = "Erro ao fazer login.";
+      showToast("Erro ao fazer login.");
+
+    }
+
+  }
+
+});
+
+// ESQUECI A SENHA
+document.getElementById("linkEsqueciSenha").addEventListener("click", async () => {
+
+  const email = document.getElementById("nomeUsuario").value.trim();
+
+  if (!email) {
+
+    showToast("Digite seu email acima antes de redefinir a senha.");
+
+    return;
+
+  }
+
+  try {
+
+    await sendPasswordResetEmail(auth, email);
+
+    showToast("Email de redefinição enviado! Verifique sua caixa de entrada.", "sucesso");
+
+  } catch (e) {
+
+    if (e.code === "auth/invalid-email") {
+
+      showToast("Digite um email válido.");
+
+    } else if (e.code === "auth/user-not-found") {
+
+      showToast("Nenhuma conta encontrada com esse email.");
+
+    } else {
+
+      showToast("Erro ao enviar email. Tente novamente.");
 
     }
 

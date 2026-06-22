@@ -33,72 +33,33 @@
 <body class="imginicial" style="display: none;">
 
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
+  <nav class="navbar navbar-dark">
     <div class="container-fluid">
 
       <a class="navbar-brand" href="inicial.html">
-
         <img src="imgs/logo.png" alt="Brownie da ENF" class="logo-navbar">
-
       </a>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="menu">
-
-        <span
-          id="nomeUsuario"
-          class="text-white me-3 fw-bold"
-        ></span>
-
-               <!-- ADMIN -->
-      <li class="nav-item d-none" id="itemAdmin">
-
-  <a id="btnAdmin" class="nav-btn nav-btn-admin" href="admin.html">
-    Admin
-  </a>
-
-</li>
-
-        <ul class="navbar-nav ms-auto align-items-center">
-
-          <li class="nav-item">
-
-            <a class="nav-link active" href="inicial.html">
-              Página Inicial
-            </a>
-
-          </li>
-
-        <li class="nav-item">
-
-            <a class="nav-btn" href="pedidos.html">
-              Pedidos
-            </a>
-
-          </li>
-
-          <li class="nav-item">
-
-         <!-- SAIR -->
-          <li class="nav-item">
-
-            <button class="nav-btn nav-btn-danger" id="btnSair">
-              Sair
-            </button>
-
-          </li>
-
-        </ul>
-
+      <div class="nav-drawer" id="navDrawer">
+        <button class="nav-drawer-close" id="navDrawerClose">✕</button>
+        <span id="nomeUsuario" class="nav-usuario"></span>
+        <div id="itemAdmin" class="d-none">
+          <a id="btnAdmin" class="nav-btn nav-btn-admin" href="admin.html">Admin</a>
+        </div>
+        <a class="nav-link" href="inicial.html">Página Inicial</a>
+        <a class="nav-btn" href="pedidos.html">Pedidos</a>
+        <button class="nav-btn nav-btn-danger" id="btnSair">Sair</button>
       </div>
 
-    </div>
+      <button class="nav-hamburger" id="navHamburger">
+        <span></span><span></span><span></span>
+      </button>
 
+    </div>
   </nav>
+
+  <!-- OVERLAY -->
+  <div class="nav-overlay" id="navOverlay"></div>
 
   <!-- CONTEÚDO -->
   <div class="container mt-5">
@@ -282,6 +243,18 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 
   <script type="module" src="jss/agendar.js"></script>
+
+  <script>
+    const _h = document.getElementById('navHamburger');
+    const _d = document.getElementById('navDrawer');
+    const _o = document.getElementById('navOverlay');
+    const _c = document.getElementById('navDrawerClose');
+    function _open() { _d.classList.add('aberto'); _o.classList.add('visivel'); }
+    function _close() { _d.classList.remove('aberto'); _o.classList.remove('visivel'); }
+    _h.addEventListener('click', _open);
+    _c.addEventListener('click', _close);
+    _o.addEventListener('click', _close);
+  </script>
 
 </body>
 
