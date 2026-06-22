@@ -18,6 +18,31 @@ setDoc
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+const botao =
+document.getElementById(
+"ativarNotificacao"
+);
+
+function atualizarBotao() {
+
+if (
+localStorage.getItem(
+"notificacoesAtivas"
+) === "true"
+) {
+
+botao.innerText =
+"✅ Notificações ativadas";
+
+botao.disabled =
+true;
+
+}
+
+}
+
+atualizarBotao();
+
 
 async function ativarNotificacao() {
 
@@ -70,27 +95,29 @@ token
 
 // salvar firestore
 await setDoc(
-
-doc(
-db,
-"notificacoes",
-token
-),
-
+doc(db,"notificacoes",token),
 {
-
 token,
-
-criadoEm:
-new Date()
-
-}
-
-);
+ativo:true,
+criadoEm:new Date(),
+navegador:navigator.userAgent
+});
 
 console.log(
 "TOKEN SALVO"
+
+
 );
+localStorage.setItem(
+"notificacoesAtivas",
+"true"
+);
+
+botao.innerText =
+"✅ Notificações ativadas";
+
+botao.disabled =
+true;
 
 alert(
 "Notificações ativadas com sucesso!"

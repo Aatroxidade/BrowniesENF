@@ -445,3 +445,66 @@ document.querySelectorAll(".btn_periodo").forEach((btn) => {
     renderizarPedidos();
   });
 });
+
+document
+.getElementById(
+"btnNotificar"
+)
+?.addEventListener(
+"click",
+
+async ()=>{
+
+try{
+
+const resposta =
+await fetch(
+
+"https://browniesenf.onrender.com/enviar-notificacao",
+
+{
+
+method:
+"POST"
+
+}
+
+);
+
+const dados =
+await resposta.json();
+
+if(
+dados.sucesso
+){
+
+Swal.fire({
+
+icon:
+"success",
+
+title:
+"Notificação enviada!"
+
+});
+
+}
+
+}
+
+catch{
+
+Swal.fire({
+
+icon:
+"error",
+
+title:
+"Erro ao enviar"
+
+});
+
+}
+
+}
+);

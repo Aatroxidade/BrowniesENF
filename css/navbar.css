@@ -12,6 +12,18 @@
     border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
+#menu{
+
+display: flex;
+
+align-items: center;
+
+gap: 12px;
+
+flex-wrap: wrap;
+
+}
+
 .nav-link{
 
     color: rgba(255,255,255,.75) !important;
@@ -23,6 +35,12 @@
 .nav-link:hover{
 
     color: white !important;
+}
+
+#ativarNotificacao{
+
+white-space: nowrap;
+
 }
 
 
@@ -48,7 +66,7 @@
 
     font-weight: 500;
 
-    margin-right: 10px;
+    margin-right: 0;
 
     
 }
@@ -73,6 +91,7 @@
     border-color: rgba(255,196,0,.25);
 
     color: #ffd166;
+
 }
 
 .nav-btn-admin:hover{
@@ -80,6 +99,8 @@
     background: rgba(255,196,0,.12);
 
     color: #ffd166;
+
+    
 }
 
 
@@ -97,6 +118,7 @@
     background: rgba(255,100,100,.12);
 
     color: #ffb3b3;
+    
 }
 
 /* MOBILE */
@@ -121,6 +143,7 @@
 
         margin-right: 0;
 
+    
     }
 
     .navbar-collapse{
@@ -128,5 +151,21 @@
         padding-top: 10px;
 
     }
+
+}
+
+#ativarNotificacao:disabled {
+
+background: #28a745;
+
+color: white;
+
+border: none;
+
+opacity: 1;
+
+cursor: default;
+
+transition: 0.3s;
 
 }

@@ -141,7 +141,7 @@ app.post("/pedido", async (req, res) => {
 
   await enviarTelegram(
 
-`🍪 NOVO PEDIDO
+` NOVO PEDIDO
 
 👤 Cliente: ${dados.nome}
 
@@ -226,7 +226,7 @@ https://aatroxidade.github.io/BrowniesENF/admin.html`
 
       await enviarTelegram(
 
-`🍪 NOVO PEDIDO
+` NOVO PEDIDO
 
 👤 Cliente: ${dados.nome}
 
@@ -454,7 +454,7 @@ app.get("/teste-telegram", async (req, res) => {
 
   await enviarTelegram(
 
-    "🍪 Teste de notificação Brownies ENF"
+    " Teste de notificação Brownies ENF"
 
   );
 
@@ -507,7 +507,7 @@ tokens,
 notification:{
 
 title:
-"🍪 Brownies ENF",
+" Brownies ENF",
 
 body:
 "Teste de notificação funcionando!"
@@ -530,6 +530,70 @@ res.status(500)
 .send(
 "Erro"
 );
+
+}
+
+});
+
+app.post(
+"/enviar-notificacao",
+
+async(
+req,
+res
+)=>{
+
+try{
+
+const snapshot =
+await db
+.collection(
+"notificacoes"
+)
+.get();
+
+const tokens =
+snapshot.docs.map(
+doc=>
+doc.data().token
+);
+
+await admin
+.messaging()
+.sendEachForMulticast({
+
+tokens,
+
+notification:{
+
+title:
+"Brownies disponíveis!",
+
+body:
+"CORRA! Temos Brownies disponíveis!!"
+
+}
+
+});
+
+res.json({
+
+sucesso:true
+
+});
+
+}
+
+catch(err){
+
+console.log(err);
+
+res.status(500)
+.json({
+
+sucesso:false
+
+});
 
 }
 

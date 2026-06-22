@@ -8,7 +8,7 @@ cron.schedule(
 async ()=>{
 
 console.log(
-"🍪 Rodando notificações"
+" Rodando notificações"
 );
 
 }
