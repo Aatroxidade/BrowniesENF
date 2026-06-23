@@ -11,7 +11,8 @@ import {
 import {
 
   doc,
-  getDoc
+  getDoc,
+  onSnapshot
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -99,18 +100,64 @@ alert("Você negou as notificações.");
 
 import "./notificacao.js";
 
+// ESTADO DA LOJA
+onSnapshot(doc(db, "config", "loja"), (snap) => {
+
+  const btnAgendar = document.getElementById("btnAgendar");
+  const agendarQtd = document.getElementById("agendarQtd");
+
+  const dados = snap.exists() ? snap.data() : { aberta: false, browniesDisponiveis: 0 };
+  const aberta = dados.aberta ?? false;
+  const qtd = dados.browniesDisponiveis ?? 0;
+
+  if (aberta && qtd > 0) {
+    btnAgendar.disabled = false;
+    btnAgendar.classList.remove("btn-secondary");
+    btnAgendar.classList.add("btn-warning");
+    agendarQtd.textContent = `${qtd} disponível(is)`;
+    agendarQtd.className = "agendar-qtd disponivel";
+  } else {
+    btnAgendar.disabled = true;
+    btnAgendar.classList.remove("btn-warning");
+    btnAgendar.classList.add("btn-secondary");
+    agendarQtd.textContent = aberta ? "Esgotado" : "Loja fechada";
+    agendarQtd.className = "agendar-qtd indisponivel";
+  }
+
+});
+
 setTimeout(async () => {
 
-if (
-Notification.permission === "default"
-) {
+  if (Notification.permission === "default") {
 
-const ativar =
-confirm(
-"Deseja receber notificações quando houver brownies disponíveis?"
-);
+    const resultado = await Swal.fire({
+      title: "Ativar notificações?",
+      text: "Receba um aviso quando houver brownies disponíveis!",
+      icon: "info",
+      showCancelButton: true,
+      confirmButtonText: "Sim, ativar",
+      cancelButtonText: "Agora não",
+      confirmButtonColor: "#ffb347",
+      cancelButtonColor: "#6c757d",
+      background: "#1a1a1a",
+      color: "#ffffff"
+    });
 
-}
+    if (resultado.isConfirmed) {
+      const permissao = await Notification.requestPermission();
+      if (permissao === "granted") {
+        Swal.fire({
+          icon: "success",
+          title: "Notificações ativadas!",
+          timer: 1800,
+          showConfirmButton: false,
+          background: "#1a1a1a",
+          color: "#ffffff"
+        });
+      }
+    }
+
+  }
 
 }, 1500);
 

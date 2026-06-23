@@ -4,7 +4,8 @@ import {
 
   doc,
   getDoc,
-  updateDoc
+  updateDoc,
+  increment
 
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -501,6 +502,10 @@ onAuthStateChanged(auth, async (user) => {
         const dados =
           await resposta.json();
 
+        await updateDoc(doc(db, "config", "loja"), {
+          browniesDisponiveis: increment(-quantidade)
+        });
+
         if (formaPagamento === "PIX") {
 
           const qrCodePix =
@@ -575,7 +580,7 @@ onAuthStateChanged(auth, async (user) => {
 
         title: "Erro",
 
-        text: "Não foi possível gerar o PIX.",
+        text: "Não foi possível enviar o pedido. Tente novamente.",
 
         confirmButtonColor: "#d33"
 

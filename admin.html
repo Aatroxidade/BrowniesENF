@@ -19,18 +19,13 @@
 <body class="imginicial" style="display:none;">
 
   <!-- NAVBAR -->
+  <div class="nav-wrapper">
   <nav class="navbar navbar-dark">
     <div class="container-fluid">
 
       <a class="navbar-brand" href="inicial.html">
         <img src="imgs/logo.png" alt="Logo" class="logo-navbar">
       </a>
-
-      <div class="nav-drawer" id="navDrawer">
-        <button class="nav-drawer-close" id="navDrawerClose">✕</button>
-        <a class="nav-link" href="inicial.html">Página Inicial</a>
-        <a class="nav-btn nav-btn-danger" href="index.html">Sair</a>
-      </div>
 
       <button class="nav-hamburger" id="navHamburger">
         <span></span><span></span><span></span>
@@ -39,13 +34,46 @@
     </div>
   </nav>
 
+  <!-- DRAWER -->
+  <div class="nav-drawer" id="navDrawer">
+    <button class="nav-drawer-close" id="navDrawerClose">✕</button>
+    <a class="nav-link" href="inicial.html">Página Inicial</a>
+    <a class="nav-btn nav-btn-danger" href="index.html">Sair</a>
+  </div>
+
   <!-- OVERLAY -->
   <div class="nav-overlay" id="navOverlay"></div>
+  </div><!-- /nav-wrapper -->
 
   <div class="container mt-5">
 
     <h1 class="titulo text-center">Painel Administrativo</h1>
     <p class="sejabemvindo text-center">Gerencie os pedidos dos clientes</p>
+
+    <!-- CONTROLE DA LOJA -->
+    <div class="loja-controle">
+
+      <div class="loja-status-row">
+        <div>
+          <h2 class="loja-titulo">Controle da Loja</h2>
+          <p class="loja-subtitulo" id="lojaStatusTexto">Carregando...</p>
+        </div>
+        <button class="btn-loja" id="btnToggleLoja">...</button>
+      </div>
+
+      <div class="loja-notif-row">
+        <button id="btnNotificar" class="btn-notificar">📢 Avisar brownies disponíveis</button>
+      </div>
+
+      <div class="loja-brownies-row">
+        <label class="loja-label">Brownies disponíveis</label>
+        <div class="loja-input-row">
+          <input type="number" id="inputBrownies" class="loja-input" min="0" placeholder="0">
+          <button class="btn-salvar-brownies" id="btnSalvarBrownies">Salvar</button>
+        </div>
+      </div>
+
+    </div>
 
     <!-- DASHBOARD -->
     <div class="dashboard-grid">
@@ -103,11 +131,6 @@
         <button class="btn_periodo" data-periodo="hoje">Hoje</button>
         <button class="btn_periodo" data-periodo="semana">Esta semana</button>
         <button class="btn_periodo" data-periodo="mes">Este mês</button>
-        <button id="btnNotificar" class="btn btn-success">
-
-          📢 Avisar brownies disponíveis!
-
-        </button>
       </div>
 
     </div>

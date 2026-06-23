@@ -13,10 +13,9 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  setDoc,
   query,
   orderBy
-
-
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const auth = getAuth(app);
@@ -60,6 +59,65 @@ onAuthStateChanged(auth, async (user) => {
   document.body.style.display = "block";
 
   carregarPedidos();
+  carregarLoja();
+
+});
+
+
+// ======================================================
+// CONTROLE DA LOJA
+// ======================================================
+
+const lojaRef = doc(db, "config", "loja");
+
+let lojaAberta = false;
+
+function carregarLoja() {
+
+  onSnapshot(lojaRef, (snap) => {
+
+    const dados = snap.exists() ? snap.data() : { aberta: false, browniesDisponiveis: 0 };
+
+    lojaAberta = dados.aberta ?? false;
+
+    const btnToggle = document.getElementById("btnToggleLoja");
+    const statusTexto = document.getElementById("lojaStatusTexto");
+    const inputBrownies = document.getElementById("inputBrownies");
+
+    if (lojaAberta) {
+      btnToggle.textContent = "Fechar loja";
+      btnToggle.className = "btn-loja aberta";
+      statusTexto.textContent = `Loja aberta · ${dados.browniesDisponiveis ?? 0} brownie(s) disponível(is)`;
+    } else {
+      btnToggle.textContent = "Abrir loja";
+      btnToggle.className = "btn-loja fechada";
+      statusTexto.textContent = "Loja fechada · pedidos desativados";
+    }
+
+    inputBrownies.value = dados.browniesDisponiveis ?? 0;
+
+  });
+
+}
+
+document.getElementById("btnToggleLoja").addEventListener("click", async () => {
+
+  await setDoc(lojaRef, { aberta: !lojaAberta }, { merge: true });
+
+});
+
+document.getElementById("btnSalvarBrownies").addEventListener("click", async () => {
+
+  const qtd = parseInt(document.getElementById("inputBrownies").value) || 0;
+
+  await setDoc(lojaRef, { browniesDisponiveis: qtd }, { merge: true });
+
+  Swal.fire({
+    icon: "success",
+    title: `${qtd} brownie(s) disponível(is)`,
+    timer: 1500,
+    showConfirmButton: false
+  });
 
 });
 

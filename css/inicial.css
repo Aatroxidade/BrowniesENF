@@ -135,6 +135,30 @@
       0 0 12px rgba(255,204,112,0.25);
 }
 
+/* BOTÃO AGENDAR */
+
+.agendar-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.agendar-qtd{
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.agendar-qtd.disponivel{
+    color: #7dff9e;
+}
+
+.agendar-qtd.indisponivel{
+    color: rgba(255,255,255,0.45);
+}
+
 /* ======================================================
    GALERIA / CARROSSEL
 ====================================================== */

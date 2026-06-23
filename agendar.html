@@ -33,23 +33,13 @@
 <body class="imginicial" style="display: none;">
 
   <!-- NAVBAR -->
+  <div class="nav-wrapper">
   <nav class="navbar navbar-dark">
     <div class="container-fluid">
 
       <a class="navbar-brand" href="inicial.html">
         <img src="imgs/logo.png" alt="Brownie da ENF" class="logo-navbar">
       </a>
-
-      <div class="nav-drawer" id="navDrawer">
-        <button class="nav-drawer-close" id="navDrawerClose">✕</button>
-        <span id="nomeUsuario" class="nav-usuario"></span>
-        <div id="itemAdmin" class="d-none">
-          <a id="btnAdmin" class="nav-btn nav-btn-admin" href="admin.html">Admin</a>
-        </div>
-        <a class="nav-link" href="inicial.html">Página Inicial</a>
-        <a class="nav-btn" href="pedidos.html">Pedidos</a>
-        <button class="nav-btn nav-btn-danger" id="btnSair">Sair</button>
-      </div>
 
       <button class="nav-hamburger" id="navHamburger">
         <span></span><span></span><span></span>
@@ -58,8 +48,21 @@
     </div>
   </nav>
 
+  <!-- DRAWER -->
+  <div class="nav-drawer" id="navDrawer">
+    <button class="nav-drawer-close" id="navDrawerClose">✕</button>
+    <span id="nomeUsuario" class="nav-usuario"></span>
+    <div id="itemAdmin" class="d-none">
+      <a id="btnAdmin" class="nav-btn nav-btn-admin" href="admin.html">Admin</a>
+    </div>
+    <a class="nav-link" href="inicial.html">Página Inicial</a>
+    <a class="nav-btn" href="pedidos.html">Pedidos</a>
+    <button class="nav-btn nav-btn-danger" id="btnSair">Sair</button>
+  </div>
+
   <!-- OVERLAY -->
   <div class="nav-overlay" id="navOverlay"></div>
+  </div><!-- /nav-wrapper -->
 
   <!-- CONTEÚDO -->
   <div class="container mt-5">
