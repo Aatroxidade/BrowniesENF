@@ -149,7 +149,41 @@ function carregarPedidos() {
     });
 
     renderizarPedidos();
+    preencherFiltroMesAno();
 
+  });
+
+}
+
+function preencherFiltroMesAno() {
+
+  const select = document.getElementById("filtroMesAno");
+  const valorAtual = select.value;
+
+  const mesesVistos = new Set();
+
+  todosPedidos.forEach((pedido) => {
+    if (!pedido.criadoEm) return;
+    const d = pedido.criadoEm.toDate ? pedido.criadoEm.toDate() : new Date(pedido.criadoEm);
+    const chave = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    mesesVistos.add(chave);
+  });
+
+  const mesesOrdenados = [...mesesVistos].sort((a, b) => b.localeCompare(a));
+
+  const nomesMeses = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho",
+                      "Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
+
+  select.innerHTML = `<option value="">Mês específico</option>`;
+
+  mesesOrdenados.forEach((chave) => {
+    const [ano, mes] = chave.split("-");
+    const label = `${nomesMeses[parseInt(mes) - 1]} de ${ano}`;
+    const opt = document.createElement("option");
+    opt.value = chave;
+    opt.textContent = label;
+    if (chave === valorAtual) opt.selected = true;
+    select.appendChild(opt);
   });
 
 }
@@ -168,6 +202,7 @@ function renderizarPedidos() {
   const busca = document.getElementById("buscarPedido")?.value?.toLowerCase() || "";
   const filtro = document.getElementById("filtroStatus")?.value || "Todos";
   const periodo = document.querySelector(".btn_periodo.ativo")?.dataset?.periodo || "todos";
+  const filtroMesAno = document.getElementById("filtroMesAno")?.value || "";
 
   const hoje = new Date();
   hoje.setHours(0, 0, 0, 0);
@@ -176,13 +211,12 @@ function renderizarPedidos() {
 
     totalPedidos++;
 
-    // Converter data do pedido (dd/mm/aaaa) para objeto Date
+    // Converter data do pedido (dd/mm/aaaa) para objeto Date em horário local
     let dataPedido = null;
     if (pedido.data) {
       const partes = pedido.data.split("/");
       if (partes.length === 3) {
-        dataPedido = new Date(`${partes[2]}-${partes[1]}-${partes[0]}`);
-        dataPedido.setHours(0, 0, 0, 0);
+        dataPedido = new Date(parseInt(partes[2]), parseInt(partes[1]) - 1, parseInt(partes[0]));
       }
     }
 
@@ -201,6 +235,13 @@ function renderizarPedidos() {
 
     // Filtro por status
     if (filtro !== "Todos" && pedido.status !== filtro) return;
+
+    // Filtro por mês específico
+    if (filtroMesAno && pedido.criadoEm) {
+      const d = pedido.criadoEm.toDate ? pedido.criadoEm.toDate() : new Date(pedido.criadoEm);
+      const chave = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+      if (chave !== filtroMesAno) return;
+    }
 
     // Filtro por período
     if (periodo !== "todos" && dataPedido) {
@@ -264,6 +305,15 @@ function criarCardPedido(pedido, pedidoId) {
 
   const valor = (pedido.quantidade || 0) * 10;
 
+  let criadoEmTexto = "";
+  if (pedido.criadoEm) {
+    const d = pedido.criadoEm.toDate ? pedido.criadoEm.toDate() : new Date(pedido.criadoEm);
+    criadoEmTexto = d.toLocaleString("pt-BR", {
+      day: "2-digit", month: "2-digit", year: "numeric",
+      hour: "2-digit", minute: "2-digit"
+    });
+  }
+
   return `
 
     <div class="card_admin">
@@ -271,7 +321,10 @@ function criarCardPedido(pedido, pedidoId) {
       <!-- CABEÇALHO -->
       <div class="card_admin_header">
 
-        <h3>${pedido.produto}</h3>
+        <div class="card_titulo_grupo">
+          <h3>${pedido.produto}</h3>
+          ${criadoEmTexto ? `<span class="card_criado_em">${criadoEmTexto}</span>` : ""}
+        </div>
 
         <span class="${statusClass}">${statusTexto}</span>
 
@@ -493,6 +546,10 @@ document
 
 document
   .getElementById("filtroStatus")
+  .addEventListener("change", renderizarPedidos);
+
+document
+  .getElementById("filtroMesAno")
   .addEventListener("change", renderizarPedidos);
 
 // Botões de período

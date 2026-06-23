@@ -347,11 +347,23 @@
     margin-bottom:12px;
 }
 
+.card_titulo_grupo{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
 .card_admin h3{
     font-size:1rem;
     font-weight:700;
     color:#ffcc70;
     margin:0;
+}
+
+.card_criado_em{
+    font-size: .7rem;
+    color: rgba(255,255,255,.4);
+    font-weight: 400;
 }
 
 .card_admin hr{
